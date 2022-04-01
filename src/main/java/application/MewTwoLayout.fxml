@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="14.0" layoutY="14.0" stroke="RED" strokeType="INSIDE" width="559.0" />
+            <Text layoutX="15.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assinment" wrappingWidth="559.0" />
+            <Text layoutX="17.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assinment" wrappingWidth="559.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="16.0" layoutY="77.0" stroke="#009eff" strokeType="INSIDE" width="559.0" />
+            <Text layoutX="17.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assinment" wrappingWidth="559.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="16.0" layoutY="140.0" stroke="#00ff1a" strokeType="INSIDE" width="559.0" />
+            <ScrollBar layoutX="578.0" layoutY="4.0" orientation="VERTICAL" prefHeight="186.0" prefWidth="14.0" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
