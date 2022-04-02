@@ -32,11 +32,46 @@ dependencies {
 }
 
 javafx {
-	version = "14"
+	version = "18"
 	modules = ['javafx.controls', 'javafx.fxml', 'javafx.media', 'javafx.swing', 'javafx.web']
 }
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+//--module-path "C:\Users\james\JavaFx\javafx-sdk-18\lib" --add-modules javafx.controls,javafx.fxml
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java"]
+        includes = ["**/*.fxml"]
+    }
+  }
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls,javafx.fxml'
+        ]
+    }
+}
+
+run {
+    doFirst {
+        jvmArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls,javafx.fxml'
+        ]
+    }
+}
+
+ext {
+	javaMain = "application.Main"
+}
+
+application {
+	mainClassName = javaMain
 }
