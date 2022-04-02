@@ -15,7 +15,7 @@
      		<Circle fill="#009eff" layoutX="269.0" layoutY="151.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       		<Circle fill="#00ff1a" layoutX="289.0" layoutY="151.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
             <Circle fill="RED" layoutX="250.0" layoutY="151.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Button layoutX="476.0" layoutY="158.0" mnemonicParsing="false" onAction="#deleteCircle" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
+            <Button layoutX="476.0" layoutY="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
