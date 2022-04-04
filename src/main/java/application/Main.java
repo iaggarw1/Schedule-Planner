@@ -15,7 +15,7 @@ public class Main extends Application {
 			//BorderPane root = new BorderPane();
 			//Scene scene = new Scene(root,400,400);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Parent root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("DropDownList.fxml"));
 			Scene scene = new Scene(root);
 			
 			primaryStage.setTitle("Hello World");
