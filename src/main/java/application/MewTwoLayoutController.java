@@ -61,6 +61,10 @@ public class MewTwoLayoutController {
 		c1.setVisible(false);
 		c2.setVisible(false);
 		c3.setVisible(false);
+		
+		for(Circle circ : circle_list) {
+			circ.setVisible(false);
+		}
 	}
 
 	@FXML
@@ -68,6 +72,10 @@ public class MewTwoLayoutController {
 		c1.setVisible(true);
 		c2.setVisible(true);
 		c3.setVisible(true);
+		
+		for(Circle circ : circle_list) {
+			circ.setVisible(true);
+		}
 	}
 
 	@FXML
@@ -88,6 +96,8 @@ public class MewTwoLayoutController {
 			System.out.println(c.getCenterX());
 			System.out.println(c.getCenterY());
 			calPane.getChildren().add(c);
+			
+			circle_list.add(c);
 		} catch (Exception err) {
 			System.out.println(err);
 			System.out.println("Missed the box");
