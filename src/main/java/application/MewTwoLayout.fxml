@@ -15,7 +15,7 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <GridPane id="calendar" fx:id="calPane" alignment="CENTER" gridLinesVisible="true" hgap="1.0" layoutX="6.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" prefWidth="584.0" vgap="1.0" AnchorPane.leftAnchor="6.0">
+            <GridPane id="calendar" fx:id="calPane" alignment="CENTER" gridLinesVisible="true" hgap="1.0" layoutX="6.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#drawNewCircle" prefHeight="150.0" prefWidth="584.0" vgap="1.0" AnchorPane.leftAnchor="6.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -34,9 +34,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Circle fill="RED" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <Circle fill="#009eff" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            		<Circle fill="#00ff1a" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            		<Circle fx:id="c1" fill="#00ff1a" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                  <Circle fx:id="c2" fill="#009eff" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <Circle fx:id="c3" fill="RED" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <Button layoutX="476.0" layoutY="158.0" mnemonicParsing="false" onAction="#deleteCircles" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
@@ -51,6 +51,7 @@
             <Text layoutX="17.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assinment" wrappingWidth="559.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="16.0" layoutY="140.0" stroke="#00ff1a" strokeType="INSIDE" width="559.0" />
             <ScrollBar layoutX="578.0" layoutY="4.0" orientation="VERTICAL" prefHeight="186.0" prefWidth="14.0" />
-         </children></AnchorPane>
+         </children>
+      </AnchorPane>
   </items>
 </SplitPane>
