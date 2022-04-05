@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MewTwoLayoutController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MewTwoLayoutController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
@@ -41,7 +39,8 @@
             		<Circle fill="#00ff1a" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                </children>
             </GridPane>
-            <Button layoutX="476.0" layoutY="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
+            <Button layoutX="476.0" layoutY="158.0" mnemonicParsing="false" onAction="#deleteCircles" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
+            <Button layoutX="356.0" layoutY="158.0" mnemonicParsing="false" onAction="#drawCircles" prefHeight="25.0" prefWidth="108.0" text="Draw Circle" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
