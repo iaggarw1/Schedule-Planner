@@ -27,8 +27,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			//Fill Calendar with text..
-			System.out.print(calendar);
+		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

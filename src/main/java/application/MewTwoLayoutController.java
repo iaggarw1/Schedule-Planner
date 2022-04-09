@@ -5,7 +5,11 @@ import javafx.geometry.HPos;
 
 import java.awt.TextField;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -22,27 +26,85 @@ import javafx.scene.text.Text;
 public class MewTwoLayoutController {
 	@FXML
 	private GridPane calPane;
-
 	@FXML
 	private Circle c1;
 	@FXML
 	private Circle c2;
 	@FXML
 	private Circle c3;
+	@FXML
+	private Text currentDate; 
 
 	private ArrayList<Circle> circle_list = new ArrayList<Circle>();
 	int y = 131;
 	int x = 166;
-
+	private Date date = new Date();
+	private Calendar cal = Calendar.getInstance();
 	public void initialize() {
+		int dayNum = 1;
+
+		//Get Date
+		cal.setTime(date);
+		
+		int currMonth = cal.get(Calendar.MONTH);
+		String monthString;
+		
+		switch(currMonth) {
+		case 0:
+			monthString = "January";
+			break;
+		case 1:
+			monthString = "Febuary";
+			break;
+		case 2:
+			monthString = "March";
+			break;
+		case 3:
+			monthString = "April";
+			break;
+		case 4:
+			monthString = "May";
+			break;
+		case 5:
+			monthString = "June";
+			break;
+		case 6:
+			monthString = "July";
+			break;
+		case 7:
+			monthString = "August";
+			break;
+		case 8:
+			monthString = "September";
+			break;
+		case 9: 
+			monthString = "October";
+			break;
+		case 10:
+			monthString = "November";
+			break;
+		case 11:
+			monthString = "December";
+			break;
+		default:
+			monthString = "UNDEFINED";
+		}
+		currentDate.setText(monthString + " " + cal.get(Calendar.YEAR));
+		
+
+
+		
+		//Fill calendar with dates
 		GridPane.setHalignment(calPane, HPos.CENTER);
 		for (int j = 1; j <= calPane.getRowCount(); j++) {
 			for (int i = 1; i <= calPane.getColumnCount(); i++) {
-				if ((i * j) <= 31) {
-					Text tempDay = new Text(Integer.toString(i * j));
+				if (dayNum <= 31) {
+					Text tempDay = new Text(Integer.toString(dayNum));
+					dayNum++;
 					GridPane.setHalignment(tempDay, HPos.CENTER);
 					calPane.add(tempDay, i - 1, j - 1);
 				} else {
+					//Break for loop
 					i = calPane.getColumnCount() + 2;
 					j = calPane.getRowCount() + 2;
 					break;
