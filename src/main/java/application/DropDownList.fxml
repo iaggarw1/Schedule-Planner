@@ -6,9 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DropDownListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.DropDownListIconController">
    <children>
       <ComboBox fx:id="comboBox" layoutX="203.0" layoutY="101.0" prefHeight="37.0" prefWidth="194.0" />
-      <Button layoutX="223.0" layoutY="148.0" mnemonicParsing="false" onAction="#getComboBoxInfo" prefHeight="22.0" prefWidth="155.0" text="Print Value In Terminal" />
    </children>
 </AnchorPane>

@@ -44,8 +44,8 @@ tasks.named('test') {
 sourceSets {
   main {
     resources {
-        srcDirs = ["src/main/java"]
-        includes = ["**/*.fxml"]
+        srcDirs = ["src/main/java", "media"]
+        includes = ["**/*.fxml", "**/*.png"]
     }
   }
 }
