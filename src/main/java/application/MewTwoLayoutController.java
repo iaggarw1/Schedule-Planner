@@ -179,4 +179,8 @@ public class MewTwoLayoutController {
     void getComboBoxInfo(ActionEvent event) {
     	System.out.println(comboBox.getValue());
     }
+    @FXML
+	public void switchToAddClassScene() {
+		Main.switchScene(1);
+	}
 }

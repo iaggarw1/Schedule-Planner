@@ -79,6 +79,10 @@ public class Class {
 	public void setClassName(String newClassName) {
 		className = newClassName;
 	}
+	
+	public String getClassName() {
+		return className;
+	}
 }
 
 
