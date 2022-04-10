@@ -24,6 +24,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 public class MewTwoLayoutController {
+	
+	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	
 	@FXML
 	private GridPane calPane;
 	@FXML
@@ -115,8 +118,21 @@ public class MewTwoLayoutController {
 		c2.setVisible(false);
 		c3.setVisible(false);
 		
-		ObservableList<String> list = FXCollections.observableArrayList("Physics", "Math", "Science");
+		ObservableList<String> list = FXCollections.observableArrayList();
     	comboBox.setItems(list);
+	}
+	
+	public void refreshComboBox() {
+		comboBox.setItems(tempComboBox.getItems());
+		//comboBox.getItems().addAll(tempComboBox.getItems());
+	}
+	public static void updateComboBox() {
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ObservableList<String> classList = FXCollections.observableArrayList();
+		for(Class tempClass : classes) {
+			classList.add(tempClass.getClassName());
+		}
+    	tempComboBox.setItems(classList);
 	}
 
 	@FXML

@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 
 public class ClassCreationLayoutController {
 	
-	private ArrayList<Class> classes = new ArrayList<Class>();
+	private static ArrayList<Class> classes = new ArrayList<Class>();
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
 	private String meetingLoc = "";
@@ -41,10 +41,11 @@ public class ClassCreationLayoutController {
 	@FXML
 	private TextField classNameID;//classNameID.getText();
 	@FXML
-	private TextField MeetingLocationID;
+	private TextField meetingLocationID;
 	
 	@FXML
 	public void switchToMainScene() {
+		MewTwoLayoutController.updateComboBox();
 		Main.switchScene(0);
 	}
 	public void initiateClass() {//(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, 
@@ -55,9 +56,16 @@ public class ClassCreationLayoutController {
 		}
 		Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className);
 		classes.add(tempClass);
+		
+		resetScene();
 	}
 	
-	public ArrayList<Class> getClasses(){
+	public static ArrayList<Class> getClasses(){
 		return classes;
+	}
+	
+	public void resetScene() {
+		classNameID.clear();
+		meetingLocationID.clear();
 	}
 }

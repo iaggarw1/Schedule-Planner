@@ -29,7 +29,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="MeetingLocationID" layoutY="2.0" prefHeight="25.0" prefWidth="311.0" promptText="Meeting Location" />
+                              <TextField fx:id="meetingLocationID" layoutY="2.0" prefHeight="25.0" prefWidth="311.0" promptText="Meeting Location" />
                            </children></AnchorPane>
                      </content>
                   </TitledPane>
