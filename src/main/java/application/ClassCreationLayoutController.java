@@ -195,11 +195,13 @@ public class ClassCreationLayoutController {
 			meetingLoc = meetingLocationID.getText();
 		}
 		String tempDuration = durationDropDown.getValue();
-		String[] splitDuration = tempDuration.split(":");
-		String tempHrs, tempMins = "";
-		tempHrs = splitDuration[0];
-		tempMins = splitDuration[1];
-		classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
+		if(tempDuration != null) {
+			String[] splitDuration = tempDuration.split(":");
+			String tempHrs, tempMins = "";
+			tempHrs = splitDuration[0];
+			tempMins = splitDuration[1];
+			classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
+		}
 		Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
 		classes.add(tempClass);
 		
@@ -223,5 +225,6 @@ public class ClassCreationLayoutController {
 		amPmDropDown.setValue(null);
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
+		iconDropDown.setValue(null);
 	}
 }
