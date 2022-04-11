@@ -17,6 +17,7 @@ public class Class {
 	
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
+	private int classDuration = 0;//in minutes
 	private String meetingLoc = "";
 	private String icon = "";
 	private Color color = new Color(0,0,0,1);
@@ -27,13 +28,14 @@ public class Class {
 	}
 	
 	public Class(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, 
-			String newMeetingLoc, String newIcon, Color newColor, String newClassName) {
+			String newMeetingLoc, String newIcon, Color newColor, String newClassName, int newDuration) {
 		assignments = newAssignments;
 		meetingTimes = newMeetingTimes;
 		meetingLoc = newMeetingLoc;
 		icon = newIcon;
 		color = newColor;
 		className = newClassName;
+		classDuration = newDuration;
 	}
 	
 	public void setAssignments(ArrayList<Assignment> newAssignments) {
@@ -82,6 +84,14 @@ public class Class {
 	
 	public String getClassName() {
 		return className;
+	}
+	
+	public void setClassDuration(int newDuration) {
+		classDuration = newDuration;
+	}
+	
+	public int getClassDuration() {
+		return classDuration;
 	}
 }
 

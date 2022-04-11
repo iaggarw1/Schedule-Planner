@@ -46,7 +46,7 @@
             </GridPane>
             <Button layoutX="476.0" layoutY="231.0" mnemonicParsing="false" onAction="#deleteCircles" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
             <Button layoutX="357.0" layoutY="231.0" mnemonicParsing="false" onAction="#drawCircles" prefHeight="25.0" prefWidth="108.0" text="Draw Circle" />
-            <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="231.0" prefWidth="150.0" />
+            <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="231.0" onMousePressed="#refreshComboBox" prefWidth="150.0" />
             <Button layoutX="174.0" layoutY="231.0" mnemonicParsing="false" onAction="#getComboBoxInfo" text="Print Selection" />
             <GridPane layoutX="3.0" layoutY="45.0" prefHeight="30.0" prefWidth="592.0">
               <columnConstraints>
@@ -77,7 +77,6 @@
                </font>
             </Text>
             <Button layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onAction="#switchToAddClassScene" text="Add Class" />
-            <Button layoutX="273.0" layoutY="231.0" mnemonicParsing="false" onAction="#refreshComboBox" text="Refresh" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="196.0" prefWidth="598.0">
          <children>
