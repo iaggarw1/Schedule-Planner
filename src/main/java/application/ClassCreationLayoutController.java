@@ -44,6 +44,8 @@ public class ClassCreationLayoutController {
 	private String icon = "";
 	private Color color = new Color(0,0,0,1);
 	private String className = "";
+	private String image1, image2, image3, image4, image5, image6;
+	private ObservableList<Image> imageList;
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
@@ -95,19 +97,25 @@ public class ClassCreationLayoutController {
     	
     	/* */
     	/* Create strings for the images using getClassLoader() */
-    	String image1 = getClass().getClassLoader().getResource("lab.png").toString();
-		String image2 = getClass().getClassLoader().getResource("math.png").toString();
-		//System.out.println(image1);
-    	String image3 = getClass().getClassLoader().getResource("art.png").toString();
-    	String image4 = getClass().getClassLoader().getResource("books.png").toString();
-    	String image5 = getClass().getClassLoader().getResource("sports.png").toString();
-    	String image6 = getClass().getClassLoader().getResource("guitar.png").toString();
-    	
+    	createIconStrings();
     	/* Create ObservableList of images, added to the comboBox */
-    	ObservableList<Image> imageList = FXCollections.observableArrayList();
+    	imageList = FXCollections.observableArrayList();
+    	/* Add images to observableList */
+    	addIconImageList();
     	
-    	/* Create images & add to observableList*/
-    	Image lab = new Image(image1);
+		iconDropDown.setButtonCell(new StatusListCell()); 		/* Sets the icon in the box to the selected icon by the user*/
+    	iconDropDown.setCellFactory(c-> new StatusListCell()); 	/* Sets rendering data within each row */
+    	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
+    	/* */
+	}
+	@FXML
+	public void switchToMainScene() {
+		MewTwoLayoutController.updateComboBox();
+		Main.switchScene(0);
+	}
+	/* */
+	private void addIconImageList() {
+		Image lab = new Image(image1);
     	Image math = new Image(image2);
     	Image art = new Image(image3);
     	Image books = new Image(image4);
@@ -115,20 +123,18 @@ public class ClassCreationLayoutController {
     	Image guitar = new Image(image6);
     	imageList.addAll(lab, math, art, books, sports, guitar);
     	iconDropDown.getItems().addAll(imageList);
-    	
-    	
-		iconDropDown.setButtonCell(new StatusListCell()); 		/* Sets the icon in the box to the selected icon by the user*/
-    	iconDropDown.setCellFactory(c-> new StatusListCell()); 	/* Sets rendering data within each row */
-    	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
-    	/* */
 	}
 	
-	@FXML
-	public void switchToMainScene() {
-		MewTwoLayoutController.updateComboBox();
-		Main.switchScene(0);
+	private void createIconStrings() {
+		image1 = getClass().getClassLoader().getResource("lab.png").toString();
+		image2 = getClass().getClassLoader().getResource("math.png").toString();
+		//System.out.println(image1);
+    	image3 = getClass().getClassLoader().getResource("art.png").toString();
+    	image4 = getClass().getClassLoader().getResource("books.png").toString();
+    	image5 = getClass().getClassLoader().getResource("sports.png").toString();
+    	image6 = getClass().getClassLoader().getResource("guitar.png").toString();
 	}
-	/* */
+	
 	 public class StatusListCell extends ListCell<Image> {
 	    	private final ImageView imageView;
 	    	public StatusListCell() {
