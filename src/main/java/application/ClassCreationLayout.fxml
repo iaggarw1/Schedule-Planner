@@ -54,7 +54,10 @@
                   </TitledPane>
                   <TitledPane animated="false" text="Icon">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="iconDropDown" layoutX="14.0" layoutY="14.0" onAction="#getIconDropDownInfo" prefWidth="150.0" />
+                           </children></AnchorPane>
                      </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Color">

@@ -2,6 +2,8 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -16,12 +18,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import application.DropDownListIconController.StatusListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -54,6 +59,8 @@ public class ClassCreationLayoutController {
 	private ComboBox<String> amPmDropDown;
 	@FXML
 	private ComboBox<String> durationDropDown;
+	@FXML
+    private ComboBox <Image> iconDropDown;
 	
 	public void initialize() {
 		ObservableList<String> hourList = FXCollections.observableArrayList();
@@ -85,6 +92,35 @@ public class ClassCreationLayoutController {
 		}
 		durationList.remove(0);
     	durationDropDown.setItems(durationList);
+    	
+    	/* */
+    	/* Create strings for the images using getClassLoader() */
+    	String image1 = getClass().getClassLoader().getResource("lab.png").toString();
+		String image2 = getClass().getClassLoader().getResource("math.png").toString();
+		//System.out.println(image1);
+    	String image3 = getClass().getClassLoader().getResource("art.png").toString();
+    	String image4 = getClass().getClassLoader().getResource("books.png").toString();
+    	String image5 = getClass().getClassLoader().getResource("sports.png").toString();
+    	String image6 = getClass().getClassLoader().getResource("guitar.png").toString();
+    	
+    	/* Create ObservableList of images, added to the comboBox */
+    	ObservableList<Image> imageList = FXCollections.observableArrayList();
+    	
+    	/* Create images & add to observableList*/
+    	Image lab = new Image(image1);
+    	Image math = new Image(image2);
+    	Image art = new Image(image3);
+    	Image books = new Image(image4);
+    	Image sports = new Image(image5);
+    	Image guitar = new Image(image6);
+    	imageList.addAll(lab, math, art, books, sports, guitar);
+    	iconDropDown.getItems().addAll(imageList);
+    	
+    	
+		iconDropDown.setButtonCell(new StatusListCell()); 		/* Sets the icon in the box to the selected icon by the user*/
+    	iconDropDown.setCellFactory(c-> new StatusListCell()); 	/* Sets rendering data within each row */
+    	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
+    	/* */
 	}
 	
 	@FXML
@@ -92,6 +128,36 @@ public class ClassCreationLayoutController {
 		MewTwoLayoutController.updateComboBox();
 		Main.switchScene(0);
 	}
+	/* */
+	 public class StatusListCell extends ListCell<Image> {
+	    	private final ImageView imageView;
+	    	public StatusListCell() {
+	    		//System.out.println("Initializing");
+	    		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+	    		imageView = new ImageView();
+	    	}
+		@Override
+		protected void updateItem(Image item, boolean empty) {
+			super.updateItem(item, empty);
+			if(empty) {
+				//System.out.println("Printing name " + item);
+				setGraphic(null);
+			}else {
+				//System.out.println("Printing image");
+				imageView.setImage(item);
+				//imageView.setFitWidth(40);
+				//imageView.setFitHeight(40);
+				setGraphic(imageView);
+			}
+		}
+	}
+	 
+	@FXML
+    void getIconDropDownInfo(ActionEvent event) {
+    	int selectedIndex = iconDropDown.getSelectionModel().getSelectedIndex();
+    	System.out.println("Printing selection value: " + selectedIndex);
+    }
+	/* */
 	
 	public void addClassTimeSlot() {
 		//TODO:check to see if all needed inputs are in
@@ -133,6 +199,8 @@ public class ClassCreationLayoutController {
 		
 		resetScene();
 	}
+	
+	
 	
 	public static ArrayList<Class> getClasses(){
 		return classes;
