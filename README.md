@@ -27,3 +27,31 @@ Group: **Mewtwo**
 
 -> ask Humera about filtering by class
 
+#Sprint 2 (4/12)
+
+*Planned for:* 6 stories for 27 points
+
+*Achieved:* 6 stories for 27 points
+
+**What was completed:**
+-Color Wheel
+-Dropdown List for Current Classes
+-List of selectable icons for each class
+-types and calendar
+-Displayed current date
+-Creating classes within the application
+
+**How to Run:**
+1. Open project in eclipse
+2. Run using gradle
+
+**Languages/Libraries:**
+1. Java SDK 8+
+2. Eclipse v2021+
+3. Gradle 7.4.2
+4. JavaFX 18 x64
+
+
+
+
+
