@@ -22,7 +22,9 @@ import application.DropDownListIconController.StatusListCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
@@ -64,17 +66,20 @@ public class ClassCreationLayoutController {
 	@FXML
     private ComboBox <Image> iconDropDown;
 	
+	@FXML
+	private ColorPicker cp;
+	
 	public void initialize() {
 		ObservableList<String> hourList = FXCollections.observableArrayList();
 		for(int hr = 1; hr <= 12; hr++) {
-			String tempStr = hr + "";
+			String tempStr = String.format("%02d", hr);
 			hourList.add(tempStr);
 		}
     	hourDropDown.setItems(hourList);
     	
     	ObservableList<String> minuteList = FXCollections.observableArrayList();
 		for(int min = 1; min <= 59; min++) {
-			String tempStr = min + "";
+			String tempStr = String.format("%02d", min) + "";
 			minuteList.add(tempStr);
 		}
     	minuteDropDown.setItems(minuteList);
@@ -107,7 +112,17 @@ public class ClassCreationLayoutController {
     	iconDropDown.setCellFactory(c-> new StatusListCell()); 	/* Sets rendering data within each row */
     	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
     	/* */
+    	
 	}
+	
+	@FXML
+	public void changeColor(ActionEvent event) {
+		Color c = cp.getValue();
+		System.out.println(c);
+		color = c;
+		System.out.println(color);
+	}
+	
 	@FXML
 	public void switchToMainScene() {
 		MewTwoLayoutController.updateComboBox();
