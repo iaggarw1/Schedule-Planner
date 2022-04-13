@@ -71,22 +71,27 @@ public class ClassCreationLayoutController {
 	
 	public void initialize() {
 		ObservableList<String> hourList = FXCollections.observableArrayList();
+		hourList.add("Hr:");
 		for(int hr = 1; hr <= 12; hr++) {
 			String tempStr = String.format("%02d", hr);
 			hourList.add(tempStr);
 		}
     	hourDropDown.setItems(hourList);
+    	hourDropDown.setValue("Hr:");
     	
     	ObservableList<String> minuteList = FXCollections.observableArrayList();
-		for(int min = 1; min <= 59; min++) {
+    	minuteList.add("Min:");
+    	for(int min = 0; min <= 59; min++) {
 			String tempStr = String.format("%02d", min) + "";
 			minuteList.add(tempStr);
 		}
     	minuteDropDown.setItems(minuteList);
+    	minuteDropDown.setValue("Min:");
     	
     	ObservableList<String> amPmList = FXCollections.observableArrayList();
 		amPmList.addAll("AM", "PM");
     	amPmDropDown.setItems(amPmList);
+    	amPmDropDown.setValue("AM");
     	
     	ObservableList<String> durationList = FXCollections.observableArrayList();
 		for(int hr = 0; hr <= 12; hr++) {
