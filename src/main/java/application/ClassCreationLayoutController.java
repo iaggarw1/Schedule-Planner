@@ -46,7 +46,7 @@ public class ClassCreationLayoutController {
 	private String icon = "";
 	private Color color = new Color(0,0,0,1);
 	private String className = "";
-	private String image1, image2, image3, image4, image5, image6;
+	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
 	
 	@FXML
@@ -136,18 +136,22 @@ public class ClassCreationLayoutController {
     	Image books = new Image(image4);
     	Image sports = new Image(image5);
     	Image guitar = new Image(image6);
-    	imageList.addAll(lab, math, art, books, sports, guitar);
+    	Image programming = new Image(image7);
+    	Image history = new Image(image8);
+    	imageList.addAll(lab, math, art, books, sports, guitar, programming, history);
     	iconDropDown.getItems().addAll(imageList);
 	}
 	
 	private void createIconStrings() {
 		image1 = getClass().getClassLoader().getResource("lab.png").toString();
 		image2 = getClass().getClassLoader().getResource("math.png").toString();
-		//System.out.println(image1);
     	image3 = getClass().getClassLoader().getResource("art.png").toString();
     	image4 = getClass().getClassLoader().getResource("books.png").toString();
     	image5 = getClass().getClassLoader().getResource("sports.png").toString();
     	image6 = getClass().getClassLoader().getResource("guitar.png").toString();
+    	image7 = getClass().getClassLoader().getResource("programming.png").toString();
+    	image8 = getClass().getClassLoader().getResource("history.png").toString();
+
 	}
 	
 	 public class StatusListCell extends ListCell<Image> {
