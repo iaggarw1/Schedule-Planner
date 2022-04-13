@@ -5,8 +5,11 @@ import javafx.geometry.HPos;
 
 import java.awt.TextField;
 import java.net.URL;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +40,8 @@ public class MewTwoLayoutController {
 	private Circle c3;
 	@FXML
 	private Text currentDate; 
+	@FXML
+	private Text fullDate;
 
 	private ArrayList<Circle> circle_list = new ArrayList<Circle>();
 	int y = 131;
@@ -93,8 +98,7 @@ public class MewTwoLayoutController {
 			monthString = "UNDEFINED";
 		}
 		currentDate.setText(monthString + " " + cal.get(Calendar.YEAR));
-		
-
+		setFullDate(monthString); /* Set full date text field to current date*/
 
 		
 		//Fill calendar with dates
@@ -119,9 +123,41 @@ public class MewTwoLayoutController {
 		c3.setVisible(false);
 		
 		ObservableList<String> list = FXCollections.observableArrayList();
-    	comboBox.setItems(list);
+    	comboBox.setItems(list);    	
 	}
 	
+	private void setFullDate(String monthString) {
+		String dow; 
+		int temp = cal.get(Calendar.DAY_OF_WEEK); /* Used to assign dow to a string of DOW */
+		switch(temp) {
+		case 1:
+			dow = "Sunday";
+			break;
+		case 2:
+			dow = "Monday";
+			break;
+		case 3:
+			dow = "Tuesday";
+			break;
+		case 4:
+			dow = "Wednesday";
+			break;
+		case 5:
+			dow = "Thursday";
+			break;
+		case 6:
+			dow = "Friday";
+			break;
+		case 7:
+			dow = "Saturday";
+			break;
+		default:
+			dow = "UNDEFINED";
+		}	
+		fullDate.setText(dow + " " + monthString + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR)); /* Set text to full date */
+		//System.out.println(cal.getTime().toString());
+	}
+
 	public void refreshComboBox() {
 		comboBox.setItems(tempComboBox.getItems());
 		//comboBox.getItems().addAll(tempComboBox.getItems());
