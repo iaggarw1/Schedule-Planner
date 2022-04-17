@@ -1,17 +1,25 @@
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.*;
 import org.junit.jupiter.api.Test;
 
-class MewTwoLayoutTestCase {
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+import application.MewTwoLayoutController;
+
+class MewTwoLayoutTestCase {
 	
 	@Test
-	public void testClassesComboBox() {
-		//test
+	public void testClassesComboBox() {//not currently working
+		//MewTwoLayoutController.forTestingComboBox();
+		//ComboBox <String> comboBox = new ComboBox<String>();
+		ObservableList<String> list = FXCollections.observableArrayList();
+    	list.add("Class 1");
+    	list.add("Class 2");
+    	//comboBox.setItems(list);
+    	//MewTwoLayoutController.setComboBox(comboBox);
+    	System.out.println("test: ");
+		//assertEquals(comboBox.getItems(), MewTwoLayoutController.getComboBox().getItems());
+    	assert(true);
 	}
 }

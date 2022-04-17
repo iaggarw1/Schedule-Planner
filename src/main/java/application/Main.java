@@ -20,6 +20,10 @@ public class Main extends Application {
 	static Parent mainPane;
 	static Parent addClassPane;
 	
+	public Main() {
+		
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

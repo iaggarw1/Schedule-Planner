@@ -48,6 +48,7 @@ public class MewTwoLayoutController {
 	int x = 166;
 	private Date date = new Date();
 	private Calendar cal = Calendar.getInstance();
+	
 	public void initialize() {
 		int dayNum = 1;
 
@@ -242,5 +243,12 @@ public class MewTwoLayoutController {
     
     public static void setComboBox(ComboBox <String> comboBox) {
     	tempComboBox = comboBox;
+    }
+    
+    public static void forTestingComboBox() {
+    	ObservableList<String> list = FXCollections.observableArrayList();
+    	list.add("Class 1");
+    	list.add("Class 2");
+    	tempComboBox.setItems(list);
     }
 }
