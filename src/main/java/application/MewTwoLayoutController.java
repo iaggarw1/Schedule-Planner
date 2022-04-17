@@ -235,4 +235,12 @@ public class MewTwoLayoutController {
 	public void switchToAddClassScene() {
 		Main.switchScene(1);
 	}
+    
+    public static ComboBox <String> getComboBox(){
+    	return tempComboBox;
+    }
+    
+    public static void setComboBox(ComboBox <String> comboBox) {
+    	tempComboBox = comboBox;
+    }
 }
