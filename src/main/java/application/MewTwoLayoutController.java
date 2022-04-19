@@ -24,12 +24,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class MewTwoLayoutController {
 	
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
-	
+	private Circle[][] circle_grid;
 	@FXML
 	private GridPane calPane;
 	@FXML
@@ -106,10 +107,14 @@ public class MewTwoLayoutController {
 		GridPane.setHalignment(calPane, HPos.CENTER);
 		for (int j = 1; j <= calPane.getRowCount(); j++) {
 			for (int i = 1; i <= calPane.getColumnCount(); i++) {
+				Rectangle rect = new Rectangle(81,20);
+				GridPane.setHalignment(rect, HPos.CENTER);
+				rect.setFill(Color.WHITE);
 				if (dayNum <= 31) {
 					Text tempDay = new Text(Integer.toString(dayNum));
 					dayNum++;
 					GridPane.setHalignment(tempDay, HPos.CENTER);
+					calPane.add(rect, i-1, j-1);
 					calPane.add(tempDay, i - 1, j - 1);
 				} else {
 					//Break for loop
@@ -122,7 +127,7 @@ public class MewTwoLayoutController {
 		c1.setVisible(false);
 		c2.setVisible(false);
 		c3.setVisible(false);
-		
+		circle_grid = new Circle[calPane.getRowCount()][calPane.getColumnCount()];
 		ObservableList<String> list = FXCollections.observableArrayList();
     	comboBox.setItems(list);    	
 	}
@@ -185,9 +190,7 @@ public class MewTwoLayoutController {
 
 	@FXML
 	public void drawCircles(ActionEvent event) {
-		c1.setVisible(true);
-		c2.setVisible(true);
-		c3.setVisible(true);
+
 		
 		for(Circle circ : circle_list) {
 			circ.setVisible(true);
@@ -201,19 +204,23 @@ public class MewTwoLayoutController {
 			int col = GridPane.getColumnIndex(clickedNode);
 			int row = GridPane.getRowIndex(clickedNode);
 			System.out.println("Row: " + (row + 1) + " Col: " + (col + 1));
-			Circle c = new Circle();
-			GridPane.setHalignment(c, HPos.LEFT);
-			Color color = Color.web("0x009eff");
-			c.setRadius(7);
-			c.setFill(color);
-			c.setVisible(true);
-			GridPane.setColumnIndex(c, col);
-			GridPane.setRowIndex(c, row);
-			System.out.println(c.getCenterX());
-			System.out.println(c.getCenterY());
-			calPane.getChildren().add(c);
-			
-			circle_list.add(c);
+			if(circle_grid[row][col] == null) {
+				Circle c = new Circle();
+				GridPane.setHalignment(c, HPos.LEFT);
+				Color color = Color.web("0x009eff");
+				c.setRadius(7);
+				c.setFill(color);
+				c.setVisible(true);
+				GridPane.setColumnIndex(c, col);
+				GridPane.setRowIndex(c, row);
+				System.out.println(c.getCenterX());
+				System.out.println(c.getCenterY());
+				calPane.getChildren().add(c);
+				circle_list.add(c);
+				circle_grid[row][col] = c;
+			} else {
+				System.out.println("There is already a circle there");
+			}
 		} catch (Exception err) {
 			System.out.println(err);
 			System.out.println("Missed the box");
