@@ -45,11 +45,25 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
-**Languages/Libraries:**
-1. Java SDK 8+
-2. Eclipse v2021+
-3. Gradle 7.4.2
-4. JavaFX 18 x64
+#Sprint 3 (4/19)
+
+*Planned for:* 10 stories for 36 points
+
+*Achieved:* 7 stories for 18 points
+
+**What was completed:**
+-Meeting Times fixes
+-Labeled ComboBoxes in Meeting Times
+-Fix Assignment box spacing
+-Displays current date
+-Added new Icons
+-Correct TextFields do not allow clicks
+-Fixed click registration for calendar
+
+**How to Run:**
+1. Open project in eclipse
+2. Run using gradle
+
 
 
 
