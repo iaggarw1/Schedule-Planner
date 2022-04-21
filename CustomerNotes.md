@@ -19,3 +19,12 @@ played with the creation of circles in the main scene, commented on the bad clic
 5. Calendar click registration 
 6. propersly display the current date
 7. add hour, min  and AM/PM
+
+**Sprint 3**
+Calendar dates not alligned with current date (already story to implement)
+Make Date/Start Time Boxes even more clearly labels
+Show current date by default in add a class?
+Make class duration more clear
+clear everything or nothing when saving a class
+Show default selected class (if exists)
+Create and Display Assignments

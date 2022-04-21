@@ -43,11 +43,12 @@ public class ClassCreationLayoutController {
 	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
 	private int classDuration = 0;
 	private String meetingLoc = "";
-	private String icon = "";
+	private int icon = 0;
 	private Color color = new Color(0,0,0,1);
 	private String className = "";
 	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
+	private static ComboBox<String> tempComboBox = new ComboBox<String>();
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
@@ -65,9 +66,17 @@ public class ClassCreationLayoutController {
 	private ComboBox<String> durationDropDown;
 	@FXML
     private ComboBox <Image> iconDropDown;
+	@FXML
+    private ComboBox <String> editBox;
 	
 	@FXML
 	private ColorPicker cp;
+	@FXML
+	void editSelect(ActionEvent event) {
+		//System.out.println(editBox.getSelectionModel().getSelectedIndex());
+
+		updateClassInfo(editBox.getSelectionModel().getSelectedIndex());
+	}
 	
 	public void initialize() {
 		ObservableList<String> hourList = FXCollections.observableArrayList();
@@ -134,6 +143,48 @@ public class ClassCreationLayoutController {
 		Main.switchScene(0);
 	}
 	/* */
+	public void updateClassInfo(int selection) {
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		System.out.println("Updating Text Fields...");
+		int temp = 0;
+		
+		String className = null;
+		String location = null;
+		int iconNumber = -1;
+		
+		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
+			if(selection == temp) {
+				className = tempClass.getClassName();
+				location = tempClass.getMeetingLoc();
+				iconNumber = tempClass.getIcon();
+				//iconDropDown.setValue(tempClass.getIcon());
+				
+			}
+			temp++;
+		}
+		
+		/* Set text fields to selection */
+		classNameID.setText(className);
+		meetingLocationID.setText(location);
+		//iconDropDown.setValue(0);
+		iconDropDown.getSelectionModel().select(iconNumber);	
+		
+		/* Replace class element */
+		//classes.remove(selection);
+	}
+	
+	public void refreshComboBox() {
+		editBox.setItems(tempComboBox.getItems());
+		//comboBox.getItems().addAll(tempComboBox.getItems());
+	}
+	public static void updateComboBox() {
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ObservableList<String> classList = FXCollections.observableArrayList();
+		for(Class tempClass : classes) {
+			classList.add(tempClass.getClassName());
+		}
+    	tempComboBox.setItems(classList);
+	}
 	private void addIconImageList() {
 		Image lab = new Image(image1);
     	Image math = new Image(image2);
@@ -186,6 +237,7 @@ public class ClassCreationLayoutController {
     void getIconDropDownInfo(ActionEvent event) {
     	int selectedIndex = iconDropDown.getSelectionModel().getSelectedIndex();
     	System.out.println("Printing selection value: " + selectedIndex);
+    	icon = iconDropDown.getSelectionModel().getSelectedIndex();
     }
 	/* */
 	
@@ -228,7 +280,10 @@ public class ClassCreationLayoutController {
 		}
 		Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
 		classes.add(tempClass);
+		ClassCreationLayoutController.updateComboBox();
 		
+		addClassTimeSlot();
+
 		resetScene();
 	}
 	
@@ -241,14 +296,19 @@ public class ClassCreationLayoutController {
 	public void resetScene() {
 		classNameID.clear();
 		meetingLocationID.clear();
+		iconDropDown.setValue(null);
+		editBox.setValue(null);
+		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
+		
 	}
 	
 	private void resetClassTimeSlot() {
-		hourDropDown.setValue(null);
-		minuteDropDown.setValue(null);
-		amPmDropDown.setValue(null);
+		hourDropDown.setValue("Hr:");
+		minuteDropDown.setValue("Min:");
+		amPmDropDown.setValue("AM");
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
 		iconDropDown.setValue(null);
+		editBox.setValue(null);
 	}
 }

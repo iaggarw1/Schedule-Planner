@@ -19,6 +19,7 @@ public class Main extends Application {
 	private static Stage displayedStage;
 	static Parent mainPane;
 	static Parent addClassPane;
+	static Parent addAssignmentPane;
 	
 	public Main() {
 		
@@ -32,11 +33,12 @@ public class Main extends Application {
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			mainPane = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
+			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			Scene scene = new Scene(root);
 			GridPane calendar = (GridPane) root.lookup("#calendar");
-			primaryStage.setTitle("Hello World");
+			primaryStage.setTitle("Main");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			displayedStage = primaryStage;
@@ -61,6 +63,10 @@ public class Main extends Application {
 			case 1:
 				displayedStage.getScene().setRoot(addClassPane);
 				displayedStage.setTitle("Add Class");
+				break;
+			case 2:
+				displayedStage.getScene().setRoot(addAssignmentPane);
+				displayedStage.setTitle("Add Assignment");
 				break;
 		}
 	}

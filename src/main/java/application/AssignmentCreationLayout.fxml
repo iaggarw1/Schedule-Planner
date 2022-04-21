@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.0728643216080402" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AssignmentCreationLayoutController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="598.0">
+         <children>
+            <Button layoutY="1.0" mnemonicParsing="false" onAction="#switchToMainScene" text="Back" />
+            <Button layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onAction="#initiateAssignment" text="Save/Add" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TextField fx:id="assignmentNameID" layoutX="69.0" layoutY="38.0" prefHeight="25.0" prefWidth="199.0" promptText="Assignment Name" />
+            <DatePicker fx:id="datePicker" layoutX="69.0" layoutY="270.0" />
+            <ComboBox fx:id="hourDropDown" layoutX="243.0" layoutY="270.0" prefHeight="25.0" prefWidth="68.0" />
+            <ComboBox fx:id="minuteDropDown" layoutX="311.0" layoutY="270.0" prefHeight="25.0" prefWidth="68.0" />
+            <ComboBox fx:id="amPmDropDown" layoutX="380.0" layoutY="270.0" prefHeight="25.0" prefWidth="68.0" />
+            <Text layoutX="69.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assignment Name:">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due Date:">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="assignmentDescID" layoutX="69.0" layoutY="74.0" prefHeight="140.0" prefWidth="378.0" promptText="Assignment description" />
+            <Text layoutX="69.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="174.0">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="243.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
