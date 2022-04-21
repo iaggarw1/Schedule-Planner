@@ -111,7 +111,7 @@ public class MewTwoLayoutController {
 				Rectangle rect = new Rectangle(81,20);
 				GridPane.setHalignment(rect, HPos.CENTER);
 				if(dayCount == cal.get(Calendar.DAY_OF_MONTH)) {
-					rect.setFill(Color.AQUAMARINE);
+					rect.setFill(Color.YELLOW);
 				}
 				else {
 					rect.setFill(Color.WHITE);
