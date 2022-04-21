@@ -150,13 +150,15 @@ public class ClassCreationLayoutController {
 		
 		String className = null;
 		String location = null;
-		int iconNumber = 0;
+		int iconNumber = -1;
 		
 		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
 			if(selection == temp) {
 				className = tempClass.getClassName();
 				location = tempClass.getMeetingLoc();
 				iconNumber = tempClass.getIcon();
+				//iconDropDown.setValue(tempClass.getIcon());
+				
 			}
 			temp++;
 		}
@@ -164,7 +166,11 @@ public class ClassCreationLayoutController {
 		/* Set text fields to selection */
 		classNameID.setText(className);
 		meetingLocationID.setText(location);
+		//iconDropDown.setValue(0);
 		iconDropDown.getSelectionModel().select(iconNumber);	
+		
+		/* Replace class element */
+		//classes.remove(selection);
 	}
 	
 	public void refreshComboBox() {
@@ -288,7 +294,10 @@ public class ClassCreationLayoutController {
 	public void resetScene() {
 		classNameID.clear();
 		meetingLocationID.clear();
-		iconDropDown.getSelectionModel().select(-1);
+		iconDropDown.setValue(null);
+		editBox.setValue(null);
+		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
+		
 	}
 	
 	private void resetClassTimeSlot() {
@@ -298,5 +307,6 @@ public class ClassCreationLayoutController {
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
 		iconDropDown.setValue(null);
+		editBox.setValue(null);
 	}
 }
