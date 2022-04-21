@@ -115,6 +115,7 @@ public class AssignmentCreationLayoutController {
 		hourDropDown.setValue("Hr:");
 		minuteDropDown.setValue("Min:");
 		amPmDropDown.setValue("AM");
+		datePicker.setValue(null);
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
