@@ -281,6 +281,8 @@ public class ClassCreationLayoutController {
 		Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
 		classes.add(tempClass);
 		ClassCreationLayoutController.updateComboBox();
+		
+		addClassTimeSlot();
 
 		resetScene();
 	}
@@ -301,9 +303,9 @@ public class ClassCreationLayoutController {
 	}
 	
 	private void resetClassTimeSlot() {
-		hourDropDown.setValue(null);
-		minuteDropDown.setValue(null);
-		amPmDropDown.setValue(null);
+		hourDropDown.setValue("Hr:");
+		minuteDropDown.setValue("Min:");
+		amPmDropDown.setValue("AM");
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
 		iconDropDown.setValue(null);

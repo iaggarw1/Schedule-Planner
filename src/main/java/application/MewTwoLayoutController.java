@@ -250,6 +250,10 @@ public class MewTwoLayoutController {
 	public void switchToAddClassScene() {
 		Main.switchScene(1);
 	}
+    @FXML
+	public void switchToAddAssignmentScene() {
+		Main.switchScene(2);
+	}
     
     public static ComboBox <String> getComboBox(){
     	return tempComboBox;
