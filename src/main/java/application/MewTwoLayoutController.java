@@ -101,15 +101,22 @@ public class MewTwoLayoutController {
 		}
 		currentDate.setText(monthString + " " + cal.get(Calendar.YEAR));
 		setFullDate(monthString); /* Set full date text field to current date*/
-
 		
 		//Fill calendar with dates
+		int dayCount = 0; /* Used to highlight current day */
 		GridPane.setHalignment(calPane, HPos.CENTER);
 		for (int j = 1; j <= calPane.getRowCount(); j++) {
 			for (int i = 1; i <= calPane.getColumnCount(); i++) {
+				dayCount ++;
 				Rectangle rect = new Rectangle(81,20);
 				GridPane.setHalignment(rect, HPos.CENTER);
-				rect.setFill(Color.WHITE);
+				if(dayCount == cal.get(Calendar.DAY_OF_MONTH)) {
+					rect.setFill(Color.AQUAMARINE);
+				}
+				else {
+					rect.setFill(Color.WHITE);
+					
+				}
 				if (dayNum <= 31) {
 					Text tempDay = new Text(Integer.toString(dayNum));
 					dayNum++;
