@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 
 public class Class {
 	
+	private static int autoClassID = 1000;
+	
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
 	private int classDuration = 0;//in minutes
@@ -22,9 +24,11 @@ public class Class {
 	private int icon = -1;
 	private Color color = new Color(0,0,0,1);
 	private String className = "";
+	private int classID;
 	
 	public Class() {
-		
+		classID = autoClassID;
+		autoClassID++;
 	}
 	
 	public Class(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, 
@@ -36,6 +40,8 @@ public class Class {
 		color = newColor;
 		className = newClassName;
 		classDuration = newDuration;
+		classID = autoClassID;
+		autoClassID++;
 	}
 	
 	public void setAssignments(ArrayList<Assignment> newAssignments) {
@@ -92,6 +98,9 @@ public class Class {
 	
 	public int getClassDuration() {
 		return classDuration;
+	}
+	public int getClassID() {
+		return classID;
 	}
 }
 
