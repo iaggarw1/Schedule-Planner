@@ -270,21 +270,26 @@ public class ClassCreationLayoutController {
 		if(!meetingLocationID.getText().equalsIgnoreCase(meetingLoc)) {
 			meetingLoc = meetingLocationID.getText();
 		}
-		String tempDuration = durationDropDown.getValue();
-		if(tempDuration != null) {
-			String[] splitDuration = tempDuration.split(":");
-			String tempHrs, tempMins = "";
-			tempHrs = splitDuration[0];
-			tempMins = splitDuration[1];
-			classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
-		}
-		Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
-		classes.add(tempClass);
-		ClassCreationLayoutController.updateComboBox();
-		
-		addClassTimeSlot();
+		if(hourDropDown.getValue() != "hr:" && minuteDropDown.getValue() != "Min:") {
+			String tempDuration = durationDropDown.getValue();
+			if(tempDuration != null) {
+				String[] splitDuration = tempDuration.split(":");
+				String tempHrs, tempMins = "";
+				tempHrs = splitDuration[0];
+				tempMins = splitDuration[1];
+				classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
+			}
+			Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
+			classes.add(tempClass);
+			ClassCreationLayoutController.updateComboBox();
+			
+			addClassTimeSlot();
 
-		resetScene();
+			resetScene();
+		}
+		else {
+			System.out.println("Please fill in all of the fields");
+		}
 	}
 	
 	

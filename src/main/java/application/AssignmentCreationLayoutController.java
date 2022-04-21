@@ -80,6 +80,9 @@ public class AssignmentCreationLayoutController {
 	}
 	@SuppressWarnings("deprecation")
 	public void initiateAssignment() {//(int month, int day, int year, int hour, int minute, String desc, String name)
+		
+		int tempMonth = -1, tempDay = -1, tempYear = -1, tempHour = -1, tempMin = -1;
+		
 		if(!assignmentNameID.getText().equalsIgnoreCase(assignmentName)) {
 			assignmentName = assignmentNameID.getText();
 		}
@@ -87,27 +90,31 @@ public class AssignmentCreationLayoutController {
 			assignmentDesc = assignmentDescID.getText();
 		}
 		
-		dueDate = Calendar.getInstance();
-		dueDate.clear();
-		LocalDate date = datePicker.getValue();
-		int tempHour = Integer.valueOf(hourDropDown.getValue());
-		if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
-			tempHour += 12;
+		if(hourDropDown.getValue() != "hr:" && minuteDropDown.getValue() != "Min:") {
+			dueDate = Calendar.getInstance();
+			dueDate.clear();
+			LocalDate date = datePicker.getValue();
+			tempHour = Integer.valueOf(hourDropDown.getValue());
+			if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
+				tempHour += 12;
+			}
+			tempMin = Integer.valueOf(minuteDropDown.getValue());
+			dueDate.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
+			
+			System.out.println(dueDate.getTime().toString());
+			
+			tempMonth = dueDate.getTime().getMonth();
+			tempDay = dueDate.getTime().getDay();
+			tempYear = dueDate.getTime().getYear();
+			
+			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName);
+			assignments.add(tempAssign);
+			
+			resetScene();
 		}
-		int tempMin = Integer.valueOf(minuteDropDown.getValue());
-		dueDate.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
-		
-		System.out.println(dueDate.getTime().toString());
-		
-		int tempMonth, tempDay, tempYear;
-		tempMonth = dueDate.getTime().getMonth();
-		tempDay = dueDate.getTime().getDay();
-		tempYear = dueDate.getTime().getYear();
-		
-		Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName);
-		assignments.add(tempAssign);
-		
-		resetScene();
+		else {
+			System.out.println("Please fill in all of the fields");
+		}
 	}
 	public void resetScene() {
 		assignmentNameID.clear();
