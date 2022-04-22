@@ -182,6 +182,7 @@ public class MewTwoLayoutController {
 			classList.add(tempClass.getClassName());
 		}
     	tempComboBox.setItems(classList);
+    	AssignmentCreationLayoutController.updateComboBox();
 	}
 
 	@FXML

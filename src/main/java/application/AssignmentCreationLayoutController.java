@@ -35,9 +35,13 @@ public class AssignmentCreationLayoutController {
 	private String assignmentName = "";
 	private String assignmentDesc = "";
 	private Calendar dueDate;
+	private Class classInst;
+	private static ComboBox<String> tempComboBox = new ComboBox<String>();
 	
 	@FXML
 	private TextField assignmentNameID;
+	@FXML
+	private ComboBox<String> classComboBox;
 	@FXML
 	private TextArea assignmentDescID;
 	@FXML
@@ -50,6 +54,7 @@ public class AssignmentCreationLayoutController {
 	private ComboBox<String> amPmDropDown;
 	
 	public void initialize() {
+		//classComboBox.setItems(tempComboBox.getItems());
 		ObservableList<String> hourList = FXCollections.observableArrayList();
 		hourList.add("Hr:");
 		for(int hr = 1; hr <= 12; hr++) {
@@ -90,6 +95,15 @@ public class AssignmentCreationLayoutController {
 			assignmentDesc = assignmentDescID.getText();
 		}
 		
+		if(classComboBox.getValue() != null) {
+			ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+			for(Class tempClass : classes) {
+				if(classComboBox.getValue().equalsIgnoreCase(tempClass.getClassName())) {
+					classInst = tempClass;
+				}
+			}
+		}
+		
 		if(hourDropDown.getValue() != "hr:" && minuteDropDown.getValue() != "Min:") {
 			dueDate = Calendar.getInstance();
 			dueDate.clear();
@@ -107,7 +121,7 @@ public class AssignmentCreationLayoutController {
 			tempDay = dueDate.getTime().getDay();
 			tempYear = dueDate.getTime().getYear();
 			
-			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName);
+			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
 			assignments.add(tempAssign);
 			
 			resetScene();
@@ -123,9 +137,40 @@ public class AssignmentCreationLayoutController {
 		minuteDropDown.setValue("Min:");
 		amPmDropDown.setValue("AM");
 		datePicker.setValue(null);
+		classComboBox.setValue(null);
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
 		return assignments;
+	}
+	
+	public static ComboBox <String> getComboBox(){
+    	return tempComboBox;
+    }
+    
+    public static void setComboBox(ComboBox <String> comboBox) {
+    	tempComboBox = comboBox;
+    }
+    
+    public void refreshClassComboBox() {
+		classComboBox.setItems(tempComboBox.getItems());
+		//comboBox.getItems().addAll(tempComboBox.getItems());
+	}
+    
+	public static void updateComboBox() {
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ObservableList<String> classList = FXCollections.observableArrayList();
+		for(Class tempClass : classes) {
+			classList.add(tempClass.getClassName());
+		}
+    	tempComboBox.setItems(classList);
+	}
+	
+	public void setClassInst(Class newClassInst) {
+		classInst = newClassInst;
+	}
+	
+	public Class getClassInst() {
+		return classInst;
 	}
 }

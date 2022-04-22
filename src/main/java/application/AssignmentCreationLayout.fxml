@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -37,6 +36,12 @@
                </font>
             </Text>
             <Text layoutX="243.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="classComboBox" layoutX="297.0" layoutY="38.0" onMousePressed="#refreshClassComboBox" prefWidth="150.0" />
+            <Text layoutX="297.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Class Name:">
                <font>
                   <Font name="Calibri Light" size="18.0" />
                </font>
