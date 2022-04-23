@@ -73,8 +73,6 @@ public class ClassCreationLayoutController {
 	private ColorPicker cp;
 	@FXML
 	void editSelect(ActionEvent event) {
-		//System.out.println(editBox.getSelectionModel().getSelectedIndex());
-
 		updateClassInfo(editBox.getSelectionModel().getSelectedIndex());
 	}
 	
@@ -151,14 +149,15 @@ public class ClassCreationLayoutController {
 		String className = null;
 		String location = null;
 		int iconNumber = -1;
+		int duration = 0;
 		
 		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
 			if(selection == temp) {
 				className = tempClass.getClassName();
 				location = tempClass.getMeetingLoc();
 				iconNumber = tempClass.getIcon();
-				//iconDropDown.setValue(tempClass.getIcon());
-				
+				color = tempClass.getColor();
+				duration = tempClass.getClassDuration();	
 			}
 			temp++;
 		}
@@ -166,9 +165,10 @@ public class ClassCreationLayoutController {
 		/* Set text fields to selection */
 		classNameID.setText(className);
 		meetingLocationID.setText(location);
-		//iconDropDown.setValue(0);
 		iconDropDown.getSelectionModel().select(iconNumber);	
-		
+		duration = duration/15;
+		durationDropDown.getSelectionModel().select(duration-1);
+		datePicker.setValue(null);
 		/* Replace class element */
 		//classes.remove(selection);
 	}
