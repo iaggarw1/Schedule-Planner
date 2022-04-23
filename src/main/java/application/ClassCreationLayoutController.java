@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.ResourceBundle;
 
 import application.DropDownListIconController.StatusListCell;
@@ -150,14 +151,17 @@ public class ClassCreationLayoutController {
 		String location = null;
 		int iconNumber = -1;
 		int duration = 0;
+		Color tempColor = null;
+		ArrayList<Calendar>mt = null;
 		
 		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
 			if(selection == temp) {
 				className = tempClass.getClassName();
 				location = tempClass.getMeetingLoc();
 				iconNumber = tempClass.getIcon();
-				color = tempClass.getColor();
+				tempColor = tempClass.getColor();
 				duration = tempClass.getClassDuration();	
+				mt = tempClass.getMeetingTimes();
 			}
 			temp++;
 		}
@@ -169,6 +173,10 @@ public class ClassCreationLayoutController {
 		duration = duration/15;
 		durationDropDown.getSelectionModel().select(duration-1);
 		datePicker.setValue(null);
+		cp.setValue(tempColor);
+		//Date d1 = (mt.get(0).getTime());
+		//LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		//datePicker.setValue(date1);
 		/* Replace class element */
 		//classes.remove(selection);
 	}
@@ -315,5 +323,6 @@ public class ClassCreationLayoutController {
 		datePicker.setValue(null);
 		iconDropDown.setValue(null);
 		editBox.setValue(null);
+		cp.setValue(null);
 	}
 }
