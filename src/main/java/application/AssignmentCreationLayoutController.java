@@ -37,6 +37,7 @@ public class AssignmentCreationLayoutController {
 	private Calendar dueDate;
 	private Class classInst;
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private static ComboBox<String> tempAssignmentBox = new ComboBox<String>();
 	
 	@FXML
 	private TextField assignmentNameID;
@@ -52,6 +53,13 @@ public class AssignmentCreationLayoutController {
 	private ComboBox<String> minuteDropDown;
 	@FXML
 	private ComboBox<String> amPmDropDown;
+	@FXML
+	private ComboBox<String> editBox;
+	
+	@FXML
+	void editSelect(ActionEvent event) {
+		updateAssignmentInfo(editBox.getSelectionModel().getSelectedIndex());
+	}
 	
 	public void initialize() {
 		//classComboBox.setItems(tempComboBox.getItems());
@@ -123,7 +131,7 @@ public class AssignmentCreationLayoutController {
 			
 			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
 			assignments.add(tempAssign);
-			
+			AssignmentCreationLayoutController.updateEditComboBox();
 			resetScene();
 		}
 		else {
@@ -138,6 +146,7 @@ public class AssignmentCreationLayoutController {
 		amPmDropDown.setValue("AM");
 		datePicker.setValue(null);
 		classComboBox.setValue(null);
+		editBox.setValue(null);
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
@@ -157,17 +166,55 @@ public class AssignmentCreationLayoutController {
 		//comboBox.getItems().addAll(tempComboBox.getItems());
 	}
     
+    public void refreshEditComboBox() {
+    	editBox.setItems(tempAssignmentBox.getItems());
+    }
+    
 	public static void updateComboBox() {
 		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
 		ObservableList<String> classList = FXCollections.observableArrayList();
+		
 		for(Class tempClass : classes) {
 			classList.add(tempClass.getClassName());
 		}
     	tempComboBox.setItems(classList);
 	}
 	
+	public static void updateEditComboBox() {
+		ArrayList<Assignment> assignments = AssignmentCreationLayoutController.getAssignments();
+		ObservableList<String> assignmentList = FXCollections.observableArrayList();
+		for(Assignment tempAssignment : assignments) {
+			System.out.println("+1 Assignment");
+			assignmentList.add(tempAssignment.getAssignmentName());
+			
+		}
+    	tempAssignmentBox.setItems(assignmentList);
+    
+	}
+	
 	public void setClassInst(Class newClassInst) {
 		classInst = newClassInst;
+	}
+	
+	public void updateAssignmentInfo(int selection) {
+		System.out.println("Upating Text Fields..");
+		ArrayList<Assignment> assignments = AssignmentCreationLayoutController.getAssignments();
+		int temp = 0;
+		
+		String assignmentName = null;
+		String assignmentDescription = null;
+		
+		for(Assignment tempAssignment : assignments) {
+			if(selection == temp) {
+				assignmentName = tempAssignment.getAssignmentName();
+				assignmentDescription = tempAssignment.getDescription();
+			}
+			temp++;
+		}
+		
+		/* Set text fields to selection */
+		assignmentNameID.setText(assignmentName);
+		assignmentDescID.setText(assignmentDescription);
 	}
 	
 	public Class getClassInst() {

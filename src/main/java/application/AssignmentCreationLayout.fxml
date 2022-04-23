@@ -46,6 +46,7 @@
                   <Font name="Calibri Light" size="18.0" />
                </font>
             </Text>
+            <ComboBox fx:id="editBox" layoutX="448.0" layoutY="38.0" onAction="#editSelect" onMousePressed="#refreshEditComboBox" prefWidth="150.0" promptText="Edit Assignment" />
          </children></AnchorPane>
   </items>
 </SplitPane>
