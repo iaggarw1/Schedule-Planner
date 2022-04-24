@@ -43,7 +43,12 @@ public class MewTwoLayoutController {
 	private Text currentDate; 
 	@FXML
 	private Text fullDate;
+	@FXML
+	private Text dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7;
 
+	//private Text[] dowSlots = {dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7};
+	private Text[] dowSlots = new Text[7];
+	
 	private ArrayList<Circle> circle_list = new ArrayList<Circle>();
 	int y = 131;
 	int x = 166;
@@ -51,6 +56,13 @@ public class MewTwoLayoutController {
 	private Calendar cal = Calendar.getInstance();
 	
 	public void initialize() {
+		dowSlots[0] = dowSlot1;
+		dowSlots[1] = dowSlot2;
+		dowSlots[2] = dowSlot3;
+		dowSlots[3] = dowSlot4;
+		dowSlots[4] = dowSlot5;
+		dowSlots[5] = dowSlot6;
+		dowSlots[6] = dowSlot7;
 		int dayNum = 1;
 
 		//Get Date
@@ -131,6 +143,15 @@ public class MewTwoLayoutController {
 				}
 			}
 		}
+		
+		//changes days of week to align with the correct dates
+		for(int dayOfMonth = 1; dayOfMonth <= 7; dayOfMonth++) {
+			//System.out.println(cal.get(Calendar.YEAR) + " " + cal.get(Calendar.MONTH)+1 + " " + dayOfMonth);
+			LocalDate testDate = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, dayOfMonth);//year, month, day
+			String tempS = testDate.getDayOfWeek().toString();
+			dowSlots[dayOfMonth - 1].setText(tempS);
+		}
+		
 		c1.setVisible(false);
 		c2.setVisible(false);
 		c3.setVisible(false);
