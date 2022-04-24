@@ -261,8 +261,7 @@ public class ClassCreationLayoutController {
 			tempHour += 12;
 		}
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
-		tempCalendar.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
-		
+		tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
 		meetingTimes.add(tempCalendar);
 		System.out.println(meetingTimes.get(0).getTime().toString());
 		

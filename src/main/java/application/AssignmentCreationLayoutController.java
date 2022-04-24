@@ -121,7 +121,7 @@ public class AssignmentCreationLayoutController {
 				tempHour += 12;
 			}
 			tempMin = Integer.valueOf(minuteDropDown.getValue());
-			dueDate.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
+			dueDate.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
 			
 			System.out.println(dueDate.getTime().toString());
 			
