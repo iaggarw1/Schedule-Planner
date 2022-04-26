@@ -64,6 +64,24 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
+#Sprint 4 (4/26)
+
+*Planned for:* 6 stories for 33 points
+
+*Achieved:* 7 stories for 34 points
+
+**What was completed:**
+-Highlight current day in calendar
+-Be able to edit classes
+-Create assignments inside the program
+-Description page for assignments
+-Have day of week properly corelate to 2022 calendar
+-Class dropdown auto populates after class is created
+-Click on date to view day details
+
+**How to Run:**
+1. Open project in eclipse
+2. Run using gradle
 
 
 
