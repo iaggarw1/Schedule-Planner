@@ -74,7 +74,9 @@ public class ClassCreationLayoutController {
 	private ColorPicker cp;
 	@FXML
 	void editSelect(ActionEvent event) {
-		updateClassInfo(editBox.getSelectionModel().getSelectedIndex());
+		if(editBox.getSelectionModel().getSelectedIndex() != -1) {
+			updateClassInfo(editBox.getSelectionModel().getSelectedIndex());
+		}
 	}
 	
 	public void initialize() {
@@ -174,9 +176,10 @@ public class ClassCreationLayoutController {
 		durationDropDown.getSelectionModel().select(duration-1);
 		datePicker.setValue(null);
 		cp.setValue(tempColor);
-		//Date d1 = (mt.get(0).getTime());
-		//LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		//datePicker.setValue(date1);
+		
+		Date d1 = (mt.get(0).getTime());
+		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		datePicker.setValue(date1);
 		/* Replace class element */
 		//classes.remove(selection);
 	}
