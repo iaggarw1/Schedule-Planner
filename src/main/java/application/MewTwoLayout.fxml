@@ -70,15 +70,10 @@
             <Text fx:id="fullDate" layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <Button layoutX="494.0" layoutY="25.0" mnemonicParsing="false" onAction="#switchToAddAssignmentScene" text="Add Assignment" />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="196.0" prefWidth="598.0">
+    <AnchorPane fx:id="assignmentTab" minHeight="0.0" minWidth="0.0" prefHeight="196.0" prefWidth="598.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="15.0" layoutY="14.0" stroke="RED" strokeType="INSIDE" width="559.0" />
-            <Text layoutX="20.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assignment" wrappingWidth="559.0" />
-            <Text layoutX="20.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assignment" wrappingWidth="559.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="15.0" layoutY="77.0" stroke="#009eff" strokeType="INSIDE" width="559.0" />
-            <Text layoutX="20.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a placeholder for an assignment" wrappingWidth="559.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2f78bd00" height="42.0" layoutX="15.0" layoutY="140.0" stroke="#00ff1a" strokeType="INSIDE" width="559.0" />
             <ScrollBar layoutX="578.0" layoutY="4.0" orientation="VERTICAL" prefHeight="186.0" prefWidth="14.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="48.0" layoutX="25.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="525.0" />
          </children>
       </AnchorPane>
   </items>

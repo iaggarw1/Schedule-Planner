@@ -1,16 +1,11 @@
 package application;
 	
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 
@@ -20,7 +15,8 @@ public class Main extends Application {
 	static Parent mainPane;
 	static Parent addClassPane;
 	static Parent addAssignmentPane;
-	
+	private MewTwoLayoutController m2Controller;
+	private AssignmentCreationLayoutController assignmentController;
 	public Main() {
 		
 	}
@@ -28,12 +24,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
+			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("AssignmentCreationLayout.fxml"));
 			//BorderPane root = new BorderPane();
 			//Scene scene = new Scene(root,400,400);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			mainPane = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
+			mainPane = loader.load();
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
-			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
+			addAssignmentPane = loader2.load();
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -42,8 +40,11 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			displayedStage = primaryStage;
-			
-		
+			assignmentController = loader2.getController();
+			m2Controller = loader.getController();
+			assignmentController.setMainPage(m2Controller);
+
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

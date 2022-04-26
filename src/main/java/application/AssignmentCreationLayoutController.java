@@ -1,6 +1,7 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 
 import java.net.URL;
@@ -18,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -49,6 +51,14 @@ public class AssignmentCreationLayoutController {
 	@FXML
 	private ComboBox<String> amPmDropDown;
 	
+	private MewTwoLayoutController mainPage;
+	
+	public MewTwoLayoutController getMainPage() {
+		return mainPage;
+	}
+	public void setMainPage(MewTwoLayoutController mainPage) {
+		this.mainPage = mainPage;
+	}
 	public void initialize() {
 		ObservableList<String> hourList = FXCollections.observableArrayList();
 		hourList.add("Hr:");
@@ -75,10 +85,19 @@ public class AssignmentCreationLayoutController {
 	}
 	@FXML
 	public void switchToMainScene() {
+		try {
+			
+
+		//mainPage.setMainController(this);
+		mainPage.updateAssignments();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		MewTwoLayoutController.updateComboBox();
 		Main.switchScene(0);
 	}
-	@SuppressWarnings("deprecation")
+
 	public void initiateAssignment() {//(int month, int day, int year, int hour, int minute, String desc, String name)
 		if(!assignmentNameID.getText().equalsIgnoreCase(assignmentName)) {
 			assignmentName = assignmentNameID.getText();
@@ -97,12 +116,12 @@ public class AssignmentCreationLayoutController {
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
 		dueDate.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
 		
-		System.out.println(dueDate.getTime().toString());
+		//System.out.println(dueDate.getTime().toString());
 		
 		int tempMonth, tempDay, tempYear;
-		tempMonth = dueDate.getTime().getMonth();
-		tempDay = dueDate.getTime().getDay();
-		tempYear = dueDate.getTime().getYear();
+		tempMonth = dueDate.get(Calendar.MONTH);
+		tempDay = dueDate.get(Calendar.DAY_OF_MONTH);
+		tempYear = dueDate.get(Calendar.YEAR);
 		
 		Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName);
 		assignments.add(tempAssign);

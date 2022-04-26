@@ -1,6 +1,7 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 
 import java.awt.TextField;
@@ -15,12 +16,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -43,20 +46,27 @@ public class MewTwoLayoutController {
 	private Text currentDate; 
 	@FXML
 	private Text fullDate;
-
+	@FXML
+	private AnchorPane assignmentTab;
+	
+	private ArrayList<Rectangle> assignmentObjects = new ArrayList<Rectangle>();
+	
 	private ArrayList<Circle> circle_list = new ArrayList<Circle>();
 	int y = 131;
 	int x = 166;
 	private Date date = new Date();
-	private Calendar cal = Calendar.getInstance();
+	public Calendar selectedDate = Calendar.getInstance();
+	private LocalDate assignmentDate = LocalDate.now();
+
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
 	
 	public void initialize() {
 		int dayNum = 1;
-
+		//Update Assignments Tab
+		//updateAssignments();
 		//Get Date
-		cal.setTime(date);
-		
-		int currMonth = cal.get(Calendar.MONTH);
+		selectedDate.setTime(date);
+		int currMonth = selectedDate.get(Calendar.MONTH);
 		String monthString;
 		
 		switch(currMonth) {
@@ -99,7 +109,7 @@ public class MewTwoLayoutController {
 		default:
 			monthString = "UNDEFINED";
 		}
-		currentDate.setText(monthString + " " + cal.get(Calendar.YEAR));
+		currentDate.setText(monthString + " " + selectedDate.get(Calendar.YEAR));
 		setFullDate(monthString); /* Set full date text field to current date*/
 		
 		//Fill calendar with dates
@@ -110,7 +120,7 @@ public class MewTwoLayoutController {
 				dayCount ++;
 				Rectangle rect = new Rectangle(81,20);
 				GridPane.setHalignment(rect, HPos.CENTER);
-				if(dayCount == cal.get(Calendar.DAY_OF_MONTH)) {
+				if(dayCount == selectedDate.get(Calendar.DAY_OF_MONTH)) {
 					rect.setFill(Color.YELLOW);
 				}
 				else {
@@ -136,12 +146,15 @@ public class MewTwoLayoutController {
 		c3.setVisible(false);
 		circle_grid = new Circle[calPane.getRowCount()][calPane.getColumnCount()];
 		ObservableList<String> list = FXCollections.observableArrayList();
-    	comboBox.setItems(list);    	
+    	comboBox.setItems(list);   
+    	getClass().getClassLoader();
+    	updateAssignments();
 	}
+	
 	
 	private void setFullDate(String monthString) {
 		String dow; 
-		int temp = cal.get(Calendar.DAY_OF_WEEK); /* Used to assign dow to a string of DOW */
+		int temp = selectedDate.get(Calendar.DAY_OF_WEEK); /* Used to assign dow to a string of DOW */
 		switch(temp) {
 		case 1:
 			dow = "Sunday";
@@ -167,7 +180,7 @@ public class MewTwoLayoutController {
 		default:
 			dow = "UNDEFINED";
 		}	
-		fullDate.setText(dow + " " + monthString + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR)); /* Set text to full date */
+		fullDate.setText(dow + " " + monthString + " " + selectedDate.get(Calendar.DAY_OF_MONTH) + ", " + selectedDate.get(Calendar.YEAR)); /* Set text to full date */
 		//System.out.println(cal.getTime().toString());
 	}
 
@@ -176,6 +189,7 @@ public class MewTwoLayoutController {
 		//comboBox.getItems().addAll(tempComboBox.getItems());
 	}
 	public static void updateComboBox() {
+
 		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
 		ObservableList<String> classList = FXCollections.observableArrayList();
 		for(Class tempClass : classes) {
@@ -183,7 +197,55 @@ public class MewTwoLayoutController {
 		}
     	tempComboBox.setItems(classList);
 	}
+	
+	public void updateAssignments() {
+		ArrayList<Assignment> allAssignments = AssignmentCreationLayoutController.getAssignments();
+		ArrayList<Assignment> currentAssignments = new ArrayList<Assignment>();
+		int currentYear = selectedDate.get(Calendar.YEAR);
+		int currentMonth = selectedDate.get(Calendar.MONTH);
+		int currentDay = selectedDate.get(Calendar.DAY_OF_MONTH);
+		
+		assignmentTab.getChildren().clear();
+		//Find assignments of selected Date
+		for (Assignment ass : allAssignments) {
 
+			Calendar dueDate = ass.getDueDate();
+			System.out.printf("Current Year:%d, CurrentMonth:%d, Current Day:%d\n", currentYear, currentMonth, currentDay);
+			System.out.printf("Test Year:%d, Test Month:%d, Test Day:%d\n", dueDate.get(Calendar.YEAR), dueDate.get(Calendar.MONTH), dueDate.get(Calendar.DAY_OF_MONTH));
+
+			if(dueDate.get(Calendar.YEAR)== currentYear && dueDate.get(Calendar.MONTH)  == currentMonth
+					&& dueDate.get(Calendar.DAY_OF_MONTH)  == currentDay) {
+				currentAssignments.add(ass);
+			}
+		}
+
+		//Display current assignments
+		
+		for (int i = 0; i < currentAssignments.size(); i++) {
+			Rectangle tempRect = new Rectangle(26, 55 * (i) + 30, 525, 30);
+			tempRect.setFill(Color.BLACK);
+			Text tempText = new Text(26, (55) * i + 50, currentAssignments.get(i).getDueDate().getTime() + " " + currentAssignments.get(i).getAssignmentName() + " - " + currentAssignments.get(i).getDescription());
+
+			tempText.setFill(Color.WHITE);
+			try {
+				if(assignmentTab != null) {
+					assignmentTab.getChildren().add(tempRect);
+					assignmentTab.getChildren().add(tempText);
+				} else {
+					System.out.print("assignment tab not found\n");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//tempRect.;
+			//assignmentObjects.add(tempRect);
+			
+
+
+
+		}
+	}
 	@FXML
 	public void deleteCircles(ActionEvent event) {
 		c1.setVisible(false);
@@ -198,7 +260,7 @@ public class MewTwoLayoutController {
 	@FXML
 	public void drawCircles(ActionEvent event) {
 
-		
+		//System.out.print(AssignmentCreationLayoutController.getAssignments());
 		for(Circle circ : circle_list) {
 			circ.setVisible(true);
 		}
@@ -208,9 +270,10 @@ public class MewTwoLayoutController {
 	public void drawNewCircle(MouseEvent event) {
 		try {
 			Node clickedNode = event.getPickResult().getIntersectedNode();
+			
 			int col = GridPane.getColumnIndex(clickedNode);
 			int row = GridPane.getRowIndex(clickedNode);
-			System.out.println("Row: " + (row + 1) + " Col: " + (col + 1));
+			//System.out.println("Row: " + (row + 1) + " Col: " + (col + 1));
 			if(circle_grid[row][col] == null) {
 				Circle c = new Circle();
 				GridPane.setHalignment(c, HPos.LEFT);
@@ -220,20 +283,31 @@ public class MewTwoLayoutController {
 				c.setVisible(true);
 				GridPane.setColumnIndex(c, col);
 				GridPane.setRowIndex(c, row);
-				System.out.println(c.getCenterX());
-				System.out.println(c.getCenterY());
-				calPane.getChildren().add(c);
+				//System.out.println(c.getCenterX());
+				//System.out.println(c.getCenterY());
+				//calPane.getChildren().add(c);
 				circle_list.add(c);
 				circle_grid[row][col] = c;
+				//getNodeFromGridPane(calPane, col, row);
+				
+
 			} else {
-				System.out.println("There is already a circle there");
+				//System.out.println("There is already a circle there");
 			}
+			//Set Selected Date NEED TO UPDATE WHEN WE FIX DATE ISSUE
+			//selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
+			selectedDate.set(selectedDate.get(Calendar.YEAR), 4, (row) * 7 + col + 1);
+			//System.out.printf("Date: %d\n", (row) * 7 + col + 1);
+			//System.out.printf("Day: %d\n", selectedDate.get(Calendar.DAY_OF_MONTH));
+			//Current Known issue: entering 31 doesn't update properly on the first time, but works after that. I'm bad at programming so I don't know why this happens
+			updateAssignments();
 		} catch (Exception err) {
 			System.out.println(err);
 			System.out.println("Missed the box");
 		}
 
 	}
+	
 	//dropdown list
 	@FXML
     private ComboBox <String> comboBox;
@@ -258,7 +332,7 @@ public class MewTwoLayoutController {
     public static ComboBox <String> getComboBox(){
     	return tempComboBox;
     }
-    
+
     public static void setComboBox(ComboBox <String> comboBox) {
     	tempComboBox = comboBox;
     }
@@ -269,4 +343,5 @@ public class MewTwoLayoutController {
     	list.add("Class 2");
     	tempComboBox.setItems(list);
     }
+
 }
