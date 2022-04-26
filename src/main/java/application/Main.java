@@ -20,6 +20,7 @@ public class Main extends Application {
 	static Parent mainPane;
 	static Parent addClassPane;
 	static Parent addAssignmentPane;
+	static Parent assignmentDescription;
 	
 	public Main() {
 		
@@ -34,6 +35,7 @@ public class Main extends Application {
 			mainPane = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
 			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
+			assignmentDescription = FXMLLoader.load(getClass().getResource("AssignmentDescription.fxml"));
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -67,6 +69,10 @@ public class Main extends Application {
 			case 2:
 				displayedStage.getScene().setRoot(addAssignmentPane);
 				displayedStage.setTitle("Add Assignment");
+				break;
+			case 3:
+				displayedStage.getScene().setRoot(assignmentDescription);
+				displayedStage.setTitle("Assignment Description");
 				break;
 		}
 	}

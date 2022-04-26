@@ -291,4 +291,9 @@ public class MewTwoLayoutController {
     	list.add("Class 2");
     	tempComboBox.setItems(list);
     }
+    
+    @FXML
+    public void switchToDescription() {
+    	Main.switchScene(3);
+    }
 }
