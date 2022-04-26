@@ -11,6 +11,7 @@ import java.util.Calendar;
 import javafx.geometry.HPos;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -174,16 +175,49 @@ public class ClassCreationLayoutController {
 		iconDropDown.getSelectionModel().select(iconNumber);	
 		duration = duration/15;
 		durationDropDown.getSelectionModel().select(duration-1);
-		datePicker.setValue(null);
 		cp.setValue(tempColor);
 		
 		Date d1 = (mt.get(0).getTime());
 		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		datePicker.setValue(date1);
+		
+		updateStartTime(d1);
+		
+		
 		/* Replace class element */
 		//classes.remove(selection);
 	}
 	
+	private void updateStartTime(Date d1) {
+		SimpleDateFormat formatHour = new SimpleDateFormat("HH");
+		SimpleDateFormat formatSeconds = new SimpleDateFormat("mm");
+		String hour = formatHour.format(d1);
+		String minutes = formatSeconds.format(d1);
+		System.out.println("Hour: " + hour + " Minutes: " + minutes);
+		
+		int hourNumber = Integer.parseInt(hour);
+		int minutesNumber = Integer.parseInt(minutes);
+		
+		
+		if(hourNumber < 12) { /* AM */
+			if(hourNumber == 0) {
+				hourNumber = 12;
+			}
+			hourDropDown.getSelectionModel().select(hourNumber);
+			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			amPmDropDown.getSelectionModel().select(0);
+		}
+		else {						/* PM*/
+			if(hourNumber != 12) {
+				hourNumber -= 12;
+			}
+			hourDropDown.getSelectionModel().select(hourNumber);
+			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			amPmDropDown.getSelectionModel().select(1);
+			
+		}
+	}
+
 	public void refreshComboBox() {
 		editBox.setItems(tempComboBox.getItems());
 		//comboBox.getItems().addAll(tempComboBox.getItems());
