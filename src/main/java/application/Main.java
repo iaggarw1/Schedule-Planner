@@ -15,8 +15,12 @@ public class Main extends Application {
 	static Parent mainPane;
 	static Parent addClassPane;
 	static Parent addAssignmentPane;
+
 	private MewTwoLayoutController m2Controller;
 	private AssignmentCreationLayoutController assignmentController;
+
+	static Parent assignmentDescription;
+	
 	public Main() {
 		
 	}
@@ -31,7 +35,11 @@ public class Main extends Application {
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			mainPane = loader.load();
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
+
 			addAssignmentPane = loader2.load();
+
+			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
+			assignmentDescription = FXMLLoader.load(getClass().getResource("AssignmentDescription.fxml"));
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -43,8 +51,7 @@ public class Main extends Application {
 			assignmentController = loader2.getController();
 			m2Controller = loader.getController();
 			assignmentController.setMainPage(m2Controller);
-
-
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -68,6 +75,10 @@ public class Main extends Application {
 			case 2:
 				displayedStage.getScene().setRoot(addAssignmentPane);
 				displayedStage.setTitle("Add Assignment");
+				break;
+			case 3:
+				displayedStage.getScene().setRoot(assignmentDescription);
+				displayedStage.setTitle("Assignment Description");
 				break;
 		}
 	}

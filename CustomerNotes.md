@@ -28,3 +28,11 @@ Make class duration more clear
 clear everything or nothing when saving a class
 Show default selected class (if exists)
 Create and Display Assignments
+
+**Sprint 4**
+fix the clearing of icon when add meeting time is called
+change date and start time labels to Texts instead of textFields
+change datePicker for classes to make it so that there is a dropdown of days of the week instead of the calandar view
+either show the meeting times on the calendar or remove the meeting times from the app
+editting assignments isnt done yet
+scroll bar for assignments

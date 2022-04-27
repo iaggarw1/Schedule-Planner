@@ -47,9 +47,15 @@ public class MewTwoLayoutController {
 	@FXML
 	private Text fullDate;
 	@FXML
+
 	private AnchorPane assignmentTab;
 	
 	private ArrayList<Rectangle> assignmentObjects = new ArrayList<Rectangle>();
+	@FXML
+	private Text dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7;
+	private Calendar cal = Calendar.getInstance();
+	//private Text[] dowSlots = {dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7};
+	private Text[] dowSlots = new Text[7];
 	
 	private ArrayList<Circle> circle_list = new ArrayList<Circle>();
 	int y = 131;
@@ -61,6 +67,13 @@ public class MewTwoLayoutController {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
 	
 	public void initialize() {
+		dowSlots[0] = dowSlot1;
+		dowSlots[1] = dowSlot2;
+		dowSlots[2] = dowSlot3;
+		dowSlots[3] = dowSlot4;
+		dowSlots[4] = dowSlot5;
+		dowSlots[5] = dowSlot6;
+		dowSlots[6] = dowSlot7;
 		int dayNum = 1;
 		//Update Assignments Tab
 		//updateAssignments();
@@ -141,6 +154,16 @@ public class MewTwoLayoutController {
 				}
 			}
 		}
+		
+		//changes days of week to align with the correct dates
+		for(int dayOfMonth = 1; dayOfMonth <= 7; dayOfMonth++) {
+			//System.out.println(cal.get(Calendar.YEAR) + " " + cal.get(Calendar.MONTH)+1 + " " + dayOfMonth);
+			//System.out.printf("Day of month: %d \n", dowSlots[dayOfMonth- 1]);
+			LocalDate testDate = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, dayOfMonth);//year, month, day
+			String tempS = testDate.getDayOfWeek().toString();
+			dowSlots[dayOfMonth - 1].setText(tempS);
+		}
+		
 		c1.setVisible(false);
 		c2.setVisible(false);
 		c3.setVisible(false);
@@ -196,6 +219,7 @@ public class MewTwoLayoutController {
 			classList.add(tempClass.getClassName());
 		}
     	tempComboBox.setItems(classList);
+    	AssignmentCreationLayoutController.updateComboBox();
 	}
 	
 	public void updateAssignments() {
@@ -213,7 +237,7 @@ public class MewTwoLayoutController {
 			System.out.printf("Current Year:%d, CurrentMonth:%d, Current Day:%d\n", currentYear, currentMonth, currentDay);
 			System.out.printf("Test Year:%d, Test Month:%d, Test Day:%d\n", dueDate.get(Calendar.YEAR), dueDate.get(Calendar.MONTH), dueDate.get(Calendar.DAY_OF_MONTH));
 
-			if(dueDate.get(Calendar.YEAR)== currentYear && dueDate.get(Calendar.MONTH)  == currentMonth
+			if(dueDate.get(Calendar.YEAR)== currentYear && dueDate.get(Calendar.MONTH) + 1  == currentMonth
 					&& dueDate.get(Calendar.DAY_OF_MONTH)  == currentDay) {
 				currentAssignments.add(ass);
 			}
@@ -342,6 +366,11 @@ public class MewTwoLayoutController {
     	list.add("Class 1");
     	list.add("Class 2");
     	tempComboBox.setItems(list);
+    }
+
+    @FXML
+    public void switchToDescription() {
+    	Main.switchScene(3);
     }
 
 }

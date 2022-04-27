@@ -37,9 +37,14 @@ public class AssignmentCreationLayoutController {
 	private String assignmentName = "";
 	private String assignmentDesc = "";
 	private Calendar dueDate;
-	
+	private Class classInst;
+	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private static ComboBox<String> tempAssignmentBox = new ComboBox<String>();
+	private MewTwoLayoutController mainPage;
 	@FXML
 	private TextField assignmentNameID;
+	@FXML
+	private ComboBox<String> classComboBox;
 	@FXML
 	private TextArea assignmentDescID;
 	@FXML
@@ -50,16 +55,25 @@ public class AssignmentCreationLayoutController {
 	private ComboBox<String> minuteDropDown;
 	@FXML
 	private ComboBox<String> amPmDropDown;
+	@FXML
+	private ComboBox<String> editBox;
 	
-	private MewTwoLayoutController mainPage;
+	@FXML
+	void editSelect(ActionEvent event) {
+		updateAssignmentInfo(editBox.getSelectionModel().getSelectedIndex());
+	}
+	
 	
 	public MewTwoLayoutController getMainPage() {
 		return mainPage;
 	}
 	public void setMainPage(MewTwoLayoutController mainPage) {
 		this.mainPage = mainPage;
+		
 	}
 	public void initialize() {
+		//classComboBox.setItems(tempComboBox.getItems());
+		dueDate = Calendar.getInstance();
 		ObservableList<String> hourList = FXCollections.observableArrayList();
 		hourList.add("Hr:");
 		for(int hr = 1; hr <= 12; hr++) {
@@ -86,11 +100,7 @@ public class AssignmentCreationLayoutController {
 	@FXML
 	public void switchToMainScene() {
 		try {
-			
-
 		//mainPage.setMainController(this);
-		mainPage.updateAssignments();
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -99,6 +109,9 @@ public class AssignmentCreationLayoutController {
 	}
 
 	public void initiateAssignment() {//(int month, int day, int year, int hour, int minute, String desc, String name)
+		
+		int tempMonth = -1, tempDay = -1, tempYear = -1, tempHour = -1, tempMin = -1;
+		
 		if(!assignmentNameID.getText().equalsIgnoreCase(assignmentName)) {
 			assignmentName = assignmentNameID.getText();
 		}
@@ -106,27 +119,50 @@ public class AssignmentCreationLayoutController {
 			assignmentDesc = assignmentDescID.getText();
 		}
 		
-		dueDate = Calendar.getInstance();
-		dueDate.clear();
-		LocalDate date = datePicker.getValue();
-		int tempHour = Integer.valueOf(hourDropDown.getValue());
-		if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
-			tempHour += 12;
+		if(classComboBox.getValue() != null) {
+			ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+			for(Class tempClass : classes) {
+				if(classComboBox.getValue().equalsIgnoreCase(tempClass.getClassName())) {
+					classInst = tempClass;
+				}
+			}
 		}
-		int tempMin = Integer.valueOf(minuteDropDown.getValue());
-		dueDate.set(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), tempHour, tempMin);
 		
+
 		//System.out.println(dueDate.getTime().toString());
 		
-		int tempMonth, tempDay, tempYear;
+		//int tempMonth, tempDay, tempYear;
 		tempMonth = dueDate.get(Calendar.MONTH);
 		tempDay = dueDate.get(Calendar.DAY_OF_MONTH);
 		tempYear = dueDate.get(Calendar.YEAR);
 		
-		Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName);
-		assignments.add(tempAssign);
+		//Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
+		//assignments.add(tempAssign);
 		
-		resetScene();
+		//resetScene();
+//=======
+		if(hourDropDown.getValue() != "hr:" && minuteDropDown.getValue() != "Min:") {
+			dueDate = Calendar.getInstance();
+			dueDate.clear();
+			LocalDate date = datePicker.getValue();
+			tempHour = Integer.valueOf(hourDropDown.getValue());
+			if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
+				tempHour += 12;
+			}
+			tempMin = Integer.valueOf(minuteDropDown.getValue());
+			dueDate.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
+			
+			System.out.println(dueDate.getTime().toString());
+
+			
+			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
+			assignments.add(tempAssign);
+			AssignmentCreationLayoutController.updateEditComboBox();
+			resetScene();
+		}
+		else {
+			System.out.println("Please fill in all of the fields");
+		}
 	}
 	public void resetScene() {
 		assignmentNameID.clear();
@@ -135,9 +171,79 @@ public class AssignmentCreationLayoutController {
 		minuteDropDown.setValue("Min:");
 		amPmDropDown.setValue("AM");
 		datePicker.setValue(null);
+		classComboBox.setValue(null);
+		editBox.setValue(null);
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
 		return assignments;
+	}
+	
+	public static ComboBox <String> getComboBox(){
+    	return tempComboBox;
+    }
+    
+    public static void setComboBox(ComboBox <String> comboBox) {
+    	tempComboBox = comboBox;
+    }
+    
+    public void refreshClassComboBox() {
+		classComboBox.setItems(tempComboBox.getItems());
+		//comboBox.getItems().addAll(tempComboBox.getItems());
+	}
+    
+    public void refreshEditComboBox() {
+    	editBox.setItems(tempAssignmentBox.getItems());
+    }
+    
+	public static void updateComboBox() {
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ObservableList<String> classList = FXCollections.observableArrayList();
+		
+		for(Class tempClass : classes) {
+			classList.add(tempClass.getClassName());
+		}
+    	tempComboBox.setItems(classList);
+	}
+	
+	public static void updateEditComboBox() {
+		ArrayList<Assignment> assignments = AssignmentCreationLayoutController.getAssignments();
+		ObservableList<String> assignmentList = FXCollections.observableArrayList();
+		for(Assignment tempAssignment : assignments) {
+			System.out.println("+1 Assignment");
+			assignmentList.add(tempAssignment.getAssignmentName());
+			
+		}
+    	tempAssignmentBox.setItems(assignmentList);
+    
+	}
+	
+	public void setClassInst(Class newClassInst) {
+		classInst = newClassInst;
+	}
+	
+	public void updateAssignmentInfo(int selection) {
+		System.out.println("Upating Text Fields..");
+		ArrayList<Assignment> assignments = AssignmentCreationLayoutController.getAssignments();
+		int temp = 0;
+		
+		String assignmentName = null;
+		String assignmentDescription = null;
+		
+		for(Assignment tempAssignment : assignments) {
+			if(selection == temp) {
+				assignmentName = tempAssignment.getAssignmentName();
+				assignmentDescription = tempAssignment.getDescription();
+			}
+			temp++;
+		}
+		
+		/* Set text fields to selection */
+		assignmentNameID.setText(assignmentName);
+		assignmentDescID.setText(assignmentDescription);
+	}
+	
+	public Class getClassInst() {
+		return classInst;
 	}
 }
