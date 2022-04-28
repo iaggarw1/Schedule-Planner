@@ -51,7 +51,6 @@ public class ClassCreationLayoutController {
 	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
-	private static int editClassID = 0;
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
@@ -130,7 +129,6 @@ public class ClassCreationLayoutController {
     	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
     	/* */
     	
-    	
 	}
 	
 	@FXML
@@ -167,8 +165,6 @@ public class ClassCreationLayoutController {
 				tempColor = tempClass.getColor();
 				duration = tempClass.getClassDuration();	
 				mt = tempClass.getMeetingTimes();
-				editClassID = tempClass.getClassID();
-				break;
 			}
 			temp++;
 		}
@@ -176,12 +172,12 @@ public class ClassCreationLayoutController {
 		/* Set text fields to selection */
 		classNameID.setText(className);
 		meetingLocationID.setText(location);
-		iconDropDown.getSelectionModel().select(iconNumber);
+		iconDropDown.getSelectionModel().select(iconNumber);	
 		duration = duration/15;
 		durationDropDown.getSelectionModel().select(duration-1);
 		cp.setValue(tempColor);
 		
-		Date d1 = (mt.get(temp).getTime());
+		Date d1 = (mt.get(0).getTime());
 		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		datePicker.setValue(date1);
 		
@@ -189,7 +185,7 @@ public class ClassCreationLayoutController {
 		
 		
 		/* Replace class element */
-		//System.out.println(editClassID);
+		//classes.remove(selection);
 	}
 	
 	private void updateStartTime(Date d1) {
@@ -285,10 +281,8 @@ public class ClassCreationLayoutController {
 	@FXML
     void getIconDropDownInfo(ActionEvent event) {
     	int selectedIndex = iconDropDown.getSelectionModel().getSelectedIndex();
-    	if(selectedIndex != -1) {
-    		System.out.println("Printing selection value: " + selectedIndex);
-    		icon = iconDropDown.getSelectionModel().getSelectedIndex();
-    	}
+    	System.out.println("Printing selection value: " + selectedIndex);
+    	icon = iconDropDown.getSelectionModel().getSelectedIndex();
     }
 	/* */
 	
@@ -305,25 +299,9 @@ public class ClassCreationLayoutController {
 		}
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
 		tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
+		meetingTimes.add(tempCalendar);
+		System.out.println(meetingTimes.get(0).getTime().toString());
 		
-		if(editClassID != 0) {
-			int iter = 0;
-			for(Class temp : classes) {
-				if(editClassID == temp.getClassID()) {
-					meetingTimes.set(iter, tempCalendar);
-					System.out.println("Replacing existing meeting time index");
-					System.out.println(meetingTimes.get(iter).getTime().toString());
-					break;
-				}
-				iter++;
-			}	
-		}
-		else {
-			meetingTimes.add(tempCalendar);
-			System.out.println(meetingTimes.get(meetingTimes.size()-1).getTime().toString());
-
-		}
-			//System.out.println("T"+meetingTimes.get(0).getTime().toString());
 		resetClassTimeSlot();
 	}
 	
@@ -345,24 +323,12 @@ public class ClassCreationLayoutController {
 				tempMins = splitDuration[1];
 				classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
 			}
-			addClassTimeSlot();
 			Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
-			if(editClassID != 0) {
-				int iter = 0;
-				for(Class temp : classes) {	/* Iterate until reach the class for selected value */
-					if(editClassID == temp.getClassID()) {
-						classes.set(iter, tempClass);
-						System.out.println("Replacing Existing Class at INDEX " + iter);
-						break;
-					}
-					iter++;
-				}
-			}
-			else {
-				classes.add(tempClass);
-			}
+			classes.add(tempClass);
 			ClassCreationLayoutController.updateComboBox();
 			
+			addClassTimeSlot();
+
 			resetScene();
 		}
 		else {
@@ -381,7 +347,6 @@ public class ClassCreationLayoutController {
 		meetingLocationID.clear();
 		iconDropDown.setValue(null);
 		editBox.setValue(null);
-		editClassID = 0;
 		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
 		
 	}
@@ -392,7 +357,7 @@ public class ClassCreationLayoutController {
 		amPmDropDown.setValue("AM");
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
-		iconDropDown.setValue(null);
+		//iconDropDown.setValue(null);
 		editBox.setValue(null);
 		cp.setValue(null);
 	}
