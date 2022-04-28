@@ -168,6 +168,7 @@ public class ClassCreationLayoutController {
 				duration = tempClass.getClassDuration();	
 				mt = tempClass.getMeetingTimes();
 				editClassID = tempClass.getClassID();
+				break;
 			}
 			temp++;
 		}
@@ -180,7 +181,7 @@ public class ClassCreationLayoutController {
 		durationDropDown.getSelectionModel().select(duration-1);
 		cp.setValue(tempColor);
 		
-		Date d1 = (mt.get(0).getTime());
+		Date d1 = (mt.get(temp).getTime());
 		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		datePicker.setValue(date1);
 		
@@ -302,9 +303,22 @@ public class ClassCreationLayoutController {
 		}
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
 		tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
-		meetingTimes.add(tempCalendar);
-		System.out.println(meetingTimes.get(0).getTime().toString());
 		
+		if(editClassID != 0) {
+			int iter = 0;
+			for(Class temp : classes) {
+				if(editClassID == temp.getClassID()) {
+					meetingTimes.set(iter, tempCalendar);
+					System.out.println("Replacing existing meeting time index");
+					break;
+				}
+				iter++;
+			}	
+		}
+		else {
+			meetingTimes.add(tempCalendar);
+		}
+			//System.out.println("T"+meetingTimes.get(0).getTime().toString());
 		resetClassTimeSlot();
 	}
 	
@@ -326,6 +340,7 @@ public class ClassCreationLayoutController {
 				tempMins = splitDuration[1];
 				classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
 			}
+			addClassTimeSlot();
 			Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
 			if(editClassID != 0) {
 				int iter = 0;
@@ -343,8 +358,6 @@ public class ClassCreationLayoutController {
 			}
 			ClassCreationLayoutController.updateComboBox();
 			
-			addClassTimeSlot();
-
 			resetScene();
 		}
 		else {
