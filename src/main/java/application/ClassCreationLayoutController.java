@@ -176,7 +176,7 @@ public class ClassCreationLayoutController {
 		/* Set text fields to selection */
 		classNameID.setText(className);
 		meetingLocationID.setText(location);
-		iconDropDown.getSelectionModel().select(iconNumber);	
+		iconDropDown.getSelectionModel().select(iconNumber);
 		duration = duration/15;
 		durationDropDown.getSelectionModel().select(duration-1);
 		cp.setValue(tempColor);
@@ -285,8 +285,10 @@ public class ClassCreationLayoutController {
 	@FXML
     void getIconDropDownInfo(ActionEvent event) {
     	int selectedIndex = iconDropDown.getSelectionModel().getSelectedIndex();
-    	System.out.println("Printing selection value: " + selectedIndex);
-    	icon = iconDropDown.getSelectionModel().getSelectedIndex();
+    	if(selectedIndex != -1) {
+    		System.out.println("Printing selection value: " + selectedIndex);
+    		icon = iconDropDown.getSelectionModel().getSelectedIndex();
+    	}
     }
 	/* */
 	
@@ -310,6 +312,7 @@ public class ClassCreationLayoutController {
 				if(editClassID == temp.getClassID()) {
 					meetingTimes.set(iter, tempCalendar);
 					System.out.println("Replacing existing meeting time index");
+					System.out.println(meetingTimes.get(iter).getTime().toString());
 					break;
 				}
 				iter++;
@@ -317,6 +320,8 @@ public class ClassCreationLayoutController {
 		}
 		else {
 			meetingTimes.add(tempCalendar);
+			System.out.println(meetingTimes.get(meetingTimes.size()-1).getTime().toString());
+
 		}
 			//System.out.println("T"+meetingTimes.get(0).getTime().toString());
 		resetClassTimeSlot();
