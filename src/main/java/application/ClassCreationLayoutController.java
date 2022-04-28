@@ -51,6 +51,7 @@ public class ClassCreationLayoutController {
 	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private static int editClassID = 0;
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
@@ -129,6 +130,7 @@ public class ClassCreationLayoutController {
     	//comboBox.getSelectionModel().select(0); 			/* This defaults the selection to the first image in the list, not sure if needed, keep in case */
     	/* */
     	
+    	
 	}
 	
 	@FXML
@@ -165,6 +167,7 @@ public class ClassCreationLayoutController {
 				tempColor = tempClass.getColor();
 				duration = tempClass.getClassDuration();	
 				mt = tempClass.getMeetingTimes();
+				editClassID = tempClass.getClassID();
 			}
 			temp++;
 		}
@@ -185,7 +188,7 @@ public class ClassCreationLayoutController {
 		
 		
 		/* Replace class element */
-		//classes.remove(selection);
+		//System.out.println(editClassID);
 	}
 	
 	private void updateStartTime(Date d1) {
@@ -324,7 +327,20 @@ public class ClassCreationLayoutController {
 				classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
 			}
 			Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
-			classes.add(tempClass);
+			if(editClassID != 0) {
+				int iter = 0;
+				for(Class temp : classes) {	/* Iterate until reach the class for selected value */
+					if(editClassID == temp.getClassID()) {
+						classes.set(iter, tempClass);
+						System.out.println("Replacing Existing Class at INDEX " + iter);
+						break;
+					}
+					iter++;
+				}
+			}
+			else {
+				classes.add(tempClass);
+			}
 			ClassCreationLayoutController.updateComboBox();
 			
 			addClassTimeSlot();
@@ -347,6 +363,7 @@ public class ClassCreationLayoutController {
 		meetingLocationID.clear();
 		iconDropDown.setValue(null);
 		editBox.setValue(null);
+		editClassID = 0;
 		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
 		
 	}
