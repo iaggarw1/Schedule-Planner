@@ -6,6 +6,7 @@ import javafx.geometry.HPos;
 
 import java.net.URL;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -60,7 +61,9 @@ public class AssignmentCreationLayoutController {
 	
 	@FXML
 	void editSelect(ActionEvent event) {
-		updateAssignmentInfo(editBox.getSelectionModel().getSelectedIndex());
+		if(editBox.getSelectionModel().getSelectedIndex() != -1) {
+			updateAssignmentInfo(editBox.getSelectionModel().getSelectedIndex());
+		}
 	}
 	
 	
@@ -229,11 +232,14 @@ public class AssignmentCreationLayoutController {
 		
 		String assignmentName = null;
 		String assignmentDescription = null;
+		Class tempClass;
+		Calendar mt = null;
 		
 		for(Assignment tempAssignment : assignments) {
 			if(selection == temp) {
 				assignmentName = tempAssignment.getAssignmentName();
 				assignmentDescription = tempAssignment.getDescription();
+				mt = tempAssignment.getDueDate();
 			}
 			temp++;
 		}
@@ -241,6 +247,42 @@ public class AssignmentCreationLayoutController {
 		/* Set text fields to selection */
 		assignmentNameID.setText(assignmentName);
 		assignmentDescID.setText(assignmentDescription);
+		
+		Date d1 = mt.getTime();
+		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		datePicker.setValue(date1);
+		
+		updateStartTime(d1);
+	}
+	
+	private void updateStartTime(Date d1) {
+		System.out.println(d1.toString());
+
+		SimpleDateFormat formatHour = new SimpleDateFormat("HH");
+		SimpleDateFormat formatSeconds = new SimpleDateFormat("mm");
+		String hour = formatHour.format(d1);
+		String minutes = formatSeconds.format(d1);
+		System.out.println("Hour: " + hour + " Minutes: " + minutes);
+		
+		int hourNumber = Integer.parseInt(hour);
+		int minutesNumber = Integer.parseInt(minutes);
+		
+		if(hourNumber < 12) { /* AM */
+			if(hourNumber == 0) {
+				hourNumber = 12;
+			}
+			hourDropDown.getSelectionModel().select(hourNumber);
+			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			amPmDropDown.getSelectionModel().select(0);
+		}
+		else {					/* PM */
+			if(hourNumber != 12) {
+				hourNumber -= 12;
+			}
+			hourDropDown.getSelectionModel().select(hourNumber);
+			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			amPmDropDown.getSelectionModel().select(1);
+		}
 	}
 	
 	public Class getClassInst() {
