@@ -42,6 +42,7 @@ public class AssignmentCreationLayoutController {
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
 	private static ComboBox<String> tempAssignmentBox = new ComboBox<String>();
 	private MewTwoLayoutController mainPage;
+	private static int editAssignmentID = 0;
 	@FXML
 	private TextField assignmentNameID;
 	@FXML
@@ -158,7 +159,20 @@ public class AssignmentCreationLayoutController {
 			System.out.println(dueDate.getTime().toString());
 			
 			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
-			assignments.add(tempAssign);
+			if(editAssignmentID != 0) {
+				int iter = 0;
+				for(Assignment temp: assignments) {
+					if(editAssignmentID == temp.getAssignmentID()) {
+						assignments.set(iter, tempAssign);
+						System.out.println("Replacing Existing Assignments at INDEX " + iter);
+						break;
+					}
+					iter++;
+				}
+			}
+			else {
+				assignments.add(tempAssign);
+			}
 			AssignmentCreationLayoutController.updateEditComboBox();
 			resetScene();
 		}
@@ -175,6 +189,7 @@ public class AssignmentCreationLayoutController {
 		datePicker.setValue(null);
 		classComboBox.setValue(null);
 		editBox.setValue(null);
+		editAssignmentID = 0;
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
@@ -231,7 +246,6 @@ public class AssignmentCreationLayoutController {
 		
 		String assignmentName = null;
 		String assignmentDescription = null;
-		Class tempClass;
 		Calendar mt = null;
 		
 		for(Assignment tempAssignment : assignments) {
@@ -239,6 +253,7 @@ public class AssignmentCreationLayoutController {
 				assignmentName = tempAssignment.getAssignmentName();
 				assignmentDescription = tempAssignment.getDescription();
 				mt = tempAssignment.getDueDate();
+				editAssignmentID = tempAssignment.getAssignmentID();
 			}
 			temp++;
 		}
