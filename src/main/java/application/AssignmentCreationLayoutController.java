@@ -145,7 +145,6 @@ public class AssignmentCreationLayoutController {
 		//resetScene();
 //=======
 		if(hourDropDown.getValue() != "hr:" && minuteDropDown.getValue() != "Min:") {
-			dueDate = Calendar.getInstance();
 			dueDate.clear();
 			LocalDate date = datePicker.getValue();
 			tempHour = Integer.valueOf(hourDropDown.getValue());
@@ -153,10 +152,10 @@ public class AssignmentCreationLayoutController {
 				tempHour += 12;
 			}
 			tempMin = Integer.valueOf(minuteDropDown.getValue());
+			tempDay = date.getDayOfMonth();
 			dueDate.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
 			
 			System.out.println(dueDate.getTime().toString());
-
 			
 			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
 			assignments.add(tempAssign);
