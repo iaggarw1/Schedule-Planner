@@ -294,13 +294,19 @@ public class ClassCreationLayoutController {
 		tempCalendar.clear();
 		LocalDate date = datePicker.getValue();
 		int tempHour = Integer.valueOf(hourDropDown.getValue());
+		if(tempHour == 12) {
+			tempHour -= 12;
+		}
 		if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
 			tempHour += 12;
 		}
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
 		tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
 		meetingTimes.add(tempCalendar);
-		System.out.println(meetingTimes.get(0).getTime().toString());
+		for(Calendar time: meetingTimes) {
+			System.out.println(time.getTime().toString());
+		}
+		//System.out.println(meetingTimes.get(0).getTime().toString());
 		
 		resetClassTimeSlot();
 	}
@@ -358,7 +364,7 @@ public class ClassCreationLayoutController {
 		durationDropDown.setValue(null);
 		datePicker.setValue(null);
 		//iconDropDown.setValue(null);
-		editBox.setValue(null);
-		cp.setValue(null);
+		//editBox.setValue(null);
+		//cp.setValue(null);
 	}
 }
