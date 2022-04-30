@@ -42,7 +42,8 @@ public class ClassCreationLayoutController {
 	
 	private static ArrayList<Class> classes = new ArrayList<Class>();
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
-	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
+	private ArrayList<Calendar> meetingDow = new ArrayList<Calendar>();
+	//private ArrayList<String> meetingDow = new ArrayList<String>();
 	private int classDuration = 0;
 	private String meetingLoc = "";
 	private int icon = 0;
@@ -51,13 +52,16 @@ public class ClassCreationLayoutController {
 	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private static int editClassID = 0;
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
 	@FXML
 	private TextField meetingLocationID;
+	//@FXML
+	//private DatePicker datePicker;
 	@FXML
-	private DatePicker datePicker;
+	private ComboBox<String> dowDropDown;
 	@FXML
 	private ComboBox<String> hourDropDown;
 	@FXML
@@ -81,12 +85,20 @@ public class ClassCreationLayoutController {
 	}
 	
 	public void initialize() {
+
 //public Class(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, String newMeetingLoc,
 		//int newIconNumber, Color newColor, String newClassName, int newDuration) {
-		classes.add(new Class(assignments, meetingTimes, "Test Location", 1, Color.AQUAMARINE, "Test Class", 10 ));
+		classes.add(new Class( ));
+
+		ObservableList<String> dowList = FXCollections.observableArrayList();
+		//dowList.add("Days of the Week");
+		dowList.add("Monday,Wednesday,Friday");
+		dowList.add("Tuesday,Thursday");
+		dowDropDown.setItems(dowList);
+    	dowDropDown.setValue("Days of the Week");
 		
 		ObservableList<String> hourList = FXCollections.observableArrayList();
-		hourList.add("Hr:");
+		//hourList.add("Hr:");
 		for(int hr = 1; hr <= 12; hr++) {
 			String tempStr = String.format("%02d", hr);
 			hourList.add(tempStr);
@@ -95,7 +107,7 @@ public class ClassCreationLayoutController {
     	hourDropDown.setValue("Hr:");
     	
     	ObservableList<String> minuteList = FXCollections.observableArrayList();
-    	minuteList.add("Min:");
+    	//minuteList.add("Min:");
     	for(int min = 0; min <= 59; min++) {
 			String tempStr = String.format("%02d", min) + "";
 			minuteList.add(tempStr);
@@ -151,15 +163,17 @@ public class ClassCreationLayoutController {
 	/* */
 	public void updateClassInfo(int selection) {
 		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ArrayList<String> meetingDow = new ArrayList<String>();
+
 		System.out.println("Updating Text Fields...");
 		int temp = 0;
 		
 		String className = null;
 		String location = null;
+		String meetingTime = null;
 		int iconNumber = -1;
 		int duration = 0;
 		Color tempColor = null;
-		ArrayList<Calendar>mt = null;
 		
 		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
 			if(selection == temp) {
@@ -168,7 +182,10 @@ public class ClassCreationLayoutController {
 				iconNumber = tempClass.getIcon();
 				tempColor = tempClass.getColor();
 				duration = tempClass.getClassDuration();	
-				mt = tempClass.getMeetingTimes();
+				meetingTime = tempClass.getMeetingTime();
+				meetingDow = tempClass.getmeetingDow();
+				editClassID = tempClass.getClassID();
+				break;
 			}
 			temp++;
 		}
@@ -181,42 +198,46 @@ public class ClassCreationLayoutController {
 		durationDropDown.getSelectionModel().select(duration-1);
 		cp.setValue(tempColor);
 		
-		Date d1 = (mt.get(0).getTime());
-		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		datePicker.setValue(date1);
-		
-		updateStartTime(d1);
-		
-		
-		/* Replace class element */
-		//classes.remove(selection);
+		updateMeetingDow(meetingDow);
+		updateStartTime(meetingTime);
 	}
 	
-	private void updateStartTime(Date d1) {
-		SimpleDateFormat formatHour = new SimpleDateFormat("HH");
-		SimpleDateFormat formatSeconds = new SimpleDateFormat("mm");
-		String hour = formatHour.format(d1);
-		String minutes = formatSeconds.format(d1);
-		System.out.println("Hour: " + hour + " Minutes: " + minutes);
-		
+	private void updateMeetingDow(ArrayList<String> meetingDow) {
+		String meeting = null;
+		for(String dow: meetingDow) {
+			if(dow != "null") {
+				meeting += dow;
+				meeting += ",";
+			}
+		}
+		meeting = meeting.substring(4);
+		meeting = meeting.substring(0, meeting.length()-1);
+		//System.out.println("TTTT:" + meeting);
+		dowDropDown.setValue(meeting);
+	}
+	
+	private void updateStartTime(String meetingTime) {
+		String hour = meetingTime.substring(0, 2);
+		String minutes = meetingTime.substring(3, 5);
+		//String amPM = meetingTime.substring(6,8);
+		//System.out.println("HOUR: " + hour + " MINUTES: " + minutes + " amPM: " + amPM);
 		int hourNumber = Integer.parseInt(hour);
 		int minutesNumber = Integer.parseInt(minutes);
 		
-		
-		if(hourNumber < 12) { /* AM */
+		if(hourNumber < 12) { // AM
 			if(hourNumber == 0) {
 				hourNumber = 12;
 			}
-			hourDropDown.getSelectionModel().select(hourNumber);
-			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			hourDropDown.getSelectionModel().select(hourNumber-1);
+			minuteDropDown.getSelectionModel().select(minutesNumber);
 			amPmDropDown.getSelectionModel().select(0);
 		}
-		else {						/* PM*/
+		else {						// PM
 			if(hourNumber != 12) {
 				hourNumber -= 12;
 			}
-			hourDropDown.getSelectionModel().select(hourNumber);
-			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			hourDropDown.getSelectionModel().select(hourNumber-1);
+			minuteDropDown.getSelectionModel().select(minutesNumber);
 			amPmDropDown.getSelectionModel().select(1);
 			
 		}
@@ -296,20 +317,32 @@ public class ClassCreationLayoutController {
 		
 		Calendar tempCalendar = Calendar.getInstance();
 		tempCalendar.clear();
-		LocalDate date = datePicker.getValue();
+		//HERE************
+		//LocalDate date = datePicker.getValue();
 		int tempHour = Integer.valueOf(hourDropDown.getValue());
+		if(tempHour == 12) {
+			tempHour -= 12;
+		}
 		if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
 			tempHour += 12;
 		}
 		int tempMin = Integer.valueOf(minuteDropDown.getValue());
-		tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
-		meetingTimes.add(tempCalendar);
-		System.out.println(meetingTimes.get(0).getTime().toString());
+		//HERE************
+		//tempCalendar.set(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth(), tempHour, tempMin);
+		
+		
+		
+		//HERE**********
+		//meetingDow.add(tempCalendar);
+		//for(Calendar time: meetingDow) {
+		//	System.out.println(time.getTime().toString());
+		//}
+		//System.out.println(meetingDow.get(0).getTime().toString());
 		
 		resetClassTimeSlot();
 	}
 	
-	public void initiateClass() {//(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, 
+	public void initiateClass() {//(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newmeetingDow, 
 								 //String newMeetingLoc, String newIcon, Color newColor, String newClassName)
 		
 		if(!classNameID.getText().equalsIgnoreCase(className)) {
@@ -327,11 +360,55 @@ public class ClassCreationLayoutController {
 				tempMins = splitDuration[1];
 				classDuration = Integer.valueOf(tempMins) + (Integer.valueOf(tempHrs) * 60);
 			}
-			Class tempClass = new Class(assignments, meetingTimes, meetingLoc, icon, color, className, classDuration);
-			classes.add(tempClass);
+			
+			//HERE*******
+			int tempHour = Integer.valueOf(hourDropDown.getValue());
+			if(tempHour == 12) {
+				tempHour -= 12;
+			}
+			if(amPmDropDown.getValue().equalsIgnoreCase("PM")) {
+				tempHour += 12;
+			}
+			int tempMin = Integer.valueOf(minuteDropDown.getValue());
+			String meetingTime = String.format("%02d:%02d %s", tempHour, tempMin, amPmDropDown.getValue());
+			
+			ArrayList<String> meetingDow = new ArrayList<String>();
+			String[] daysOfTheWeek = dowDropDown.getValue().split(",");
+			for(String day: daysOfTheWeek) {
+				meetingDow.add(day);
+			}
+			//for testing
+			System.out.println("days: ");
+			for(String day: daysOfTheWeek) {
+				System.out.print(day + " ");
+			}
+			System.out.println();
+			System.out.print("At: ");
+			System.out.print(meetingTime);
+			System.out.print(" for: ");
+			System.out.println(classDuration + " mins");
+			
+			
+			Class tempClass = new Class(assignments, meetingDow, meetingTime, meetingLoc, icon, color, className, classDuration);
+			/* Replaces class if it already exists */
+			if(editClassID != 0) {
+				int iter = 0;
+				for(Class temp : classes) {	/* Iterate until reach the class for selected value */
+					if(editClassID == temp.getClassID()) {
+						classes.set(iter, tempClass);
+						System.out.println("Replacing Existing Class at INDEX " + iter);
+						break;
+					}
+					iter++;
+				}
+			}
+			else {
+				classes.add(tempClass);
+			}
+			
 			ClassCreationLayoutController.updateComboBox();
 			
-			addClassTimeSlot();
+			//addClassTimeSlot();
 
 			resetScene();
 		}
@@ -351,18 +428,21 @@ public class ClassCreationLayoutController {
 		meetingLocationID.clear();
 		iconDropDown.setValue(null);
 		editBox.setValue(null);
+		editClassID = 0;
+		cp.setValue(Color.WHITE);
 		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
-		
+		resetClassTimeSlot();
 	}
 	
 	private void resetClassTimeSlot() {
+		dowDropDown.setValue("Days of the Week");
 		hourDropDown.setValue("Hr:");
 		minuteDropDown.setValue("Min:");
 		amPmDropDown.setValue("AM");
 		durationDropDown.setValue(null);
-		datePicker.setValue(null);
+		//datePicker.setValue(null);
 		//iconDropDown.setValue(null);
-		editBox.setValue(null);
-		cp.setValue(null);
+		//editBox.setValue(null);
+		//cp.setValue(null);
 	}
 }
