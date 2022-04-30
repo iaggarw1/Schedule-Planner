@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -159,7 +160,7 @@ public class AssignmentCreationLayoutController {
 			System.out.println(dueDate.getTime().toString());
 			
 			Assignment tempAssign = new Assignment(tempMonth, tempDay, tempYear, tempHour, tempMin, assignmentDesc, assignmentName, classInst);
-			if(editAssignmentID != 0) {
+			if(editAssignmentID != 0) { //replace existing assignment
 				int iter = 0;
 				for(Assignment temp: assignments) {
 					if(editAssignmentID == temp.getAssignmentID()) {
@@ -169,11 +170,39 @@ public class AssignmentCreationLayoutController {
 					}
 					iter++;
 				}
+				
+				ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+				for(Class tempClass: classes) {
+					if(tempClass.getClassName() == classComboBox.getValue()) {
+						ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
+						for(Assignment tempAssignment: tempClass.getAssignments()) {
+							if(editAssignmentID == tempAssignment.getAssignmentID()) {
+								tempAssignments.add(tempAssign);
+							}
+							else {
+								tempAssignments.add(tempAssignment);
+							}
+						}
+						tempClass.setAssignments(tempAssignments);
+					}
+				}
 			}
-			else {
+			else { //add new assignment
 				assignments.add(tempAssign);
+				ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+				for(Class tempClass : classes) {
+					if(tempClass.getClassName() == classComboBox.getValue()) {
+						ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
+						for(Assignment tempAssignment: tempClass.getAssignments()) {
+							tempAssignments.add(tempAssignment);
+						}
+						tempAssignments.add(tempAssign);
+						tempClass.setAssignments(tempAssignments);
+					}
+				}
 			}
 			AssignmentCreationLayoutController.updateEditComboBox();
+			
 			resetScene();
 		}
 		else {
@@ -242,6 +271,7 @@ public class AssignmentCreationLayoutController {
 	public void updateAssignmentInfo(int selection) {
 		System.out.println("Upating Text Fields..");
 		ArrayList<Assignment> assignments = AssignmentCreationLayoutController.getAssignments();
+		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
 		int temp = 0;
 		
 		String assignmentName = null;
@@ -254,10 +284,23 @@ public class AssignmentCreationLayoutController {
 				assignmentDescription = tempAssignment.getDescription();
 				mt = tempAssignment.getDueDate();
 				editAssignmentID = tempAssignment.getAssignmentID();
+				break;
 			}
 			temp++;
 		}
 		
+		
+		for(Class tempClass : classes) {
+			System.out.println("Size of " + tempClass.getClassName() + ": " + tempClass.getAssignments().size());
+			for(Assignment tempAssignment: tempClass.getAssignments()) {
+				if(tempAssignment.getAssignmentName() == assignmentName) {
+						//			classInst = tempClass;
+					System.out.println(tempAssignment.getAssignmentName());
+					classComboBox.setValue(tempClass.getClassName());
+					//break;
+				}
+			}
+		}
 		/* Set text fields to selection */
 		assignmentNameID.setText(assignmentName);
 		assignmentDescID.setText(assignmentDescription);

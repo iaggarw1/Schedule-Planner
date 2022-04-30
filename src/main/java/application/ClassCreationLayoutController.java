@@ -371,7 +371,6 @@ public class ClassCreationLayoutController {
 			String[] daysOfTheWeek = dowDropDown.getValue().split(",");
 			for(String day: daysOfTheWeek) {
 				meetingDow.add(day);
-				System.out.println("1");
 			}
 			//for testing
 			System.out.println("days: ");
