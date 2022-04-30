@@ -52,6 +52,7 @@ public class ClassCreationLayoutController {
 	private String image1, image2, image3, image4, image5, image6, image7, image8;
 	private ObservableList<Image> imageList;
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private static int editClassID = 0;
 	
 	@FXML
 	private TextField classNameID;//classNameID.getText();
@@ -157,15 +158,17 @@ public class ClassCreationLayoutController {
 	/* */
 	public void updateClassInfo(int selection) {
 		ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+		ArrayList<String> meetingDow = new ArrayList<String>();
+
 		System.out.println("Updating Text Fields...");
 		int temp = 0;
 		
 		String className = null;
 		String location = null;
+		String meetingTime = null;
 		int iconNumber = -1;
 		int duration = 0;
 		Color tempColor = null;
-		ArrayList<String> mt = null;
 		
 		for(Class tempClass : classes) {	/* Iterate until reach the class for selected value */
 			if(selection == temp) {
@@ -174,7 +177,10 @@ public class ClassCreationLayoutController {
 				iconNumber = tempClass.getIcon();
 				tempColor = tempClass.getColor();
 				duration = tempClass.getClassDuration();	
-				mt = tempClass.getmeetingDow();
+				meetingTime = tempClass.getMeetingTime();
+				meetingDow = tempClass.getmeetingDow();
+				editClassID = tempClass.getClassID();
+				break;
 			}
 			temp++;
 		}
@@ -187,44 +193,46 @@ public class ClassCreationLayoutController {
 		durationDropDown.getSelectionModel().select(duration-1);
 		cp.setValue(tempColor);
 		
-		
-		//HERE***************
-		//Date d1 = (mt.get(0).getTime());
-		//LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		//datePicker.setValue(date1);
-		
-		//updateStartTime(d1);
-		
-		
-		/* Replace class element */
-		//classes.remove(selection);
+		updateMeetingDow(meetingDow);
+		updateStartTime(meetingTime);
 	}
 	
-	private void updateStartTime(Date d1) {
-		SimpleDateFormat formatHour = new SimpleDateFormat("HH");
-		SimpleDateFormat formatSeconds = new SimpleDateFormat("mm");
-		String hour = formatHour.format(d1);
-		String minutes = formatSeconds.format(d1);
-		System.out.println("Hour: " + hour + " Minutes: " + minutes);
-		
+	private void updateMeetingDow(ArrayList<String> meetingDow) {
+		String meeting = null;
+		for(String dow: meetingDow) {
+			if(dow != "null") {
+				meeting += dow;
+				meeting += ",";
+			}
+		}
+		meeting = meeting.substring(4);
+		meeting = meeting.substring(0, meeting.length()-1);
+		//System.out.println("TTTT:" + meeting);
+		dowDropDown.setValue(meeting);
+	}
+	
+	private void updateStartTime(String meetingTime) {
+		String hour = meetingTime.substring(0, 2);
+		String minutes = meetingTime.substring(3, 5);
+		//String amPM = meetingTime.substring(6,8);
+		//System.out.println("HOUR: " + hour + " MINUTES: " + minutes + " amPM: " + amPM);
 		int hourNumber = Integer.parseInt(hour);
 		int minutesNumber = Integer.parseInt(minutes);
 		
-		
-		if(hourNumber < 12) { /* AM */
+		if(hourNumber < 12) { // AM
 			if(hourNumber == 0) {
 				hourNumber = 12;
 			}
-			hourDropDown.getSelectionModel().select(hourNumber);
-			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			hourDropDown.getSelectionModel().select(hourNumber-1);
+			minuteDropDown.getSelectionModel().select(minutesNumber);
 			amPmDropDown.getSelectionModel().select(0);
 		}
-		else {						/* PM*/
+		else {						// PM
 			if(hourNumber != 12) {
 				hourNumber -= 12;
 			}
-			hourDropDown.getSelectionModel().select(hourNumber);
-			minuteDropDown.getSelectionModel().select(minutesNumber+1);
+			hourDropDown.getSelectionModel().select(hourNumber-1);
+			minuteDropDown.getSelectionModel().select(minutesNumber);
 			amPmDropDown.getSelectionModel().select(1);
 			
 		}
@@ -363,6 +371,7 @@ public class ClassCreationLayoutController {
 			String[] daysOfTheWeek = dowDropDown.getValue().split(",");
 			for(String day: daysOfTheWeek) {
 				meetingDow.add(day);
+				System.out.println("1");
 			}
 			//for testing
 			System.out.println("days: ");
@@ -377,7 +386,22 @@ public class ClassCreationLayoutController {
 			
 			
 			Class tempClass = new Class(assignments, meetingDow, meetingTime, meetingLoc, icon, color, className, classDuration);
-			classes.add(tempClass);
+			/* Replaces class if it already exists */
+			if(editClassID != 0) {
+				int iter = 0;
+				for(Class temp : classes) {	/* Iterate until reach the class for selected value */
+					if(editClassID == temp.getClassID()) {
+						classes.set(iter, tempClass);
+						System.out.println("Replacing Existing Class at INDEX " + iter);
+						break;
+					}
+					iter++;
+				}
+			}
+			else {
+				classes.add(tempClass);
+			}
+			
 			ClassCreationLayoutController.updateComboBox();
 			
 			//addClassTimeSlot();
@@ -400,6 +424,7 @@ public class ClassCreationLayoutController {
 		meetingLocationID.clear();
 		iconDropDown.setValue(null);
 		editBox.setValue(null);
+		editClassID = 0;
 		cp.setValue(Color.WHITE);
 		System.out.println("resetting: " + iconDropDown.getSelectionModel().getSelectedIndex());
 		resetClassTimeSlot();
