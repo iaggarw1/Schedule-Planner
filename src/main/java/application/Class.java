@@ -18,7 +18,9 @@ public class Class {
 	private static int autoClassID = 1000;
 	
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
-	private ArrayList<Calendar> meetingTimes = new ArrayList<Calendar>();
+	//private ArrayList<Calendar> meetingDow = new ArrayList<Calendar>();
+	private ArrayList<String> meetingDow = new ArrayList<String>();
+	private String meetingTime = "";//Format: %02d:%02d %s
 	private int classDuration = 0;//in minutes
 	private String meetingLoc = "";
 	private int icon = -1;
@@ -31,10 +33,11 @@ public class Class {
 		autoClassID++;
 	}
 	
-	public Class(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, 
+	public Class(ArrayList<Assignment> newAssignments, ArrayList<String> newMeetingDow, String newMeetingTime,  
 			String newMeetingLoc, int newIconNumber, Color newColor, String newClassName, int newDuration) {
 		assignments = newAssignments;
-		meetingTimes = newMeetingTimes;
+		meetingDow = newMeetingDow;
+		meetingTime = newMeetingTime;
 		meetingLoc = newMeetingLoc;
 		icon = newIconNumber;
 		color = newColor;
@@ -52,12 +55,20 @@ public class Class {
 		return assignments;
 	}
 	
-	public void setMeetingTimes(ArrayList<Calendar> newMeetingTimes) {
-		meetingTimes = newMeetingTimes;
+	public void setmeetingDow(ArrayList<String> newMeetingDow) {
+		meetingDow = newMeetingDow;
 	}
 	
-	public ArrayList<Calendar> getMeetingTimes(){
-		return meetingTimes;
+	public ArrayList<String> getmeetingDow(){
+		return meetingDow;
+	}
+	
+	public void setMeetingTime(String newMeetingTime) {
+		meetingTime = newMeetingTime;
+	}
+	
+	public String getMeetingTime() {
+		return meetingTime;
 	}
 	
 	public void setMeetingLoc(String newMeetingLoc) {
