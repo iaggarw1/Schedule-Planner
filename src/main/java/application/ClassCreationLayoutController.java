@@ -81,6 +81,10 @@ public class ClassCreationLayoutController {
 	}
 	
 	public void initialize() {
+//public Class(ArrayList<Assignment> newAssignments, ArrayList<Calendar> newMeetingTimes, String newMeetingLoc,
+		//int newIconNumber, Color newColor, String newClassName, int newDuration) {
+		classes.add(new Class(assignments, meetingTimes, "Test Location", 1, Color.AQUAMARINE, "Test Class", 10 ));
+		
 		ObservableList<String> hourList = FXCollections.observableArrayList();
 		hourList.add("Hr:");
 		for(int hr = 1; hr <= 12; hr++) {

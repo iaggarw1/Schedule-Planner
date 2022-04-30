@@ -20,7 +20,9 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -225,21 +227,31 @@ public class MewTwoLayoutController {
 	public void updateAssignments() {
 		ArrayList<Assignment> allAssignments = AssignmentCreationLayoutController.getAssignments();
 		ArrayList<Assignment> currentAssignments = new ArrayList<Assignment>();
+		ArrayList<Button> allButtons = new ArrayList<Button>();
 		int currentYear = selectedDate.get(Calendar.YEAR);
 		int currentMonth = selectedDate.get(Calendar.MONTH);
 		int currentDay = selectedDate.get(Calendar.DAY_OF_MONTH);
 		
 		assignmentTab.getChildren().clear();
 		//Find assignments of selected Date
-		for (Assignment ass : allAssignments) {
-
+		for (int i = 0; i < allAssignments.size(); i++) {
+			Assignment ass = allAssignments.get(i);
 			Calendar dueDate = ass.getDueDate();
-			System.out.printf("Current Year:%d, CurrentMonth:%d, Current Day:%d\n", currentYear, currentMonth, currentDay);
-			System.out.printf("Test Year:%d, Test Month:%d, Test Day:%d\n", dueDate.get(Calendar.YEAR), dueDate.get(Calendar.MONTH), dueDate.get(Calendar.DAY_OF_MONTH));
-
+			//System.out.printf("Current Year:%d, CurrentMonth:%d, Current Day:%d\n", currentYear, currentMonth, currentDay);
+			//System.out.printf("Test Year:%d, Test Month:%d, Test Day:%d\n", dueDate.get(Calendar.YEAR), dueDate.get(Calendar.MONTH), dueDate.get(Calendar.DAY_OF_MONTH));
+			
 			if(dueDate.get(Calendar.YEAR)== currentYear && dueDate.get(Calendar.MONTH) + 1  == currentMonth
 					&& dueDate.get(Calendar.DAY_OF_MONTH)  == currentDay) {
 				currentAssignments.add(ass);
+				Button b = new Button(ass.getDueDate().getTime() + " " + ass.getAssignmentName() + " - " + ass.getDescription());
+				b.setId(Integer.toString(i));
+				b.setTranslateX(26);
+				b.setTranslateY(55 * (allButtons.size() + 1));
+				b.setMinSize(525, 30);
+				b.setOnAction(event -> buttonClicked(b));
+				allButtons.add(b);
+				assignmentTab.getChildren().add(b);
+				
 			}
 		}
 
@@ -249,12 +261,13 @@ public class MewTwoLayoutController {
 			Rectangle tempRect = new Rectangle(26, 55 * (i) + 30, 525, 30);
 			tempRect.setFill(Color.BLACK);
 			Text tempText = new Text(26, (55) * i + 50, currentAssignments.get(i).getDueDate().getTime() + " " + currentAssignments.get(i).getAssignmentName() + " - " + currentAssignments.get(i).getDescription());
-
+			
 			tempText.setFill(Color.WHITE);
 			try {
 				if(assignmentTab != null) {
-					assignmentTab.getChildren().add(tempRect);
-					assignmentTab.getChildren().add(tempText);
+					//tempRect.addEventFilter(null, null);
+					//assignmentTab.getChildren().add(tempRect);
+					//assignmentTab.getChildren().add(tempText);
 				} else {
 					System.out.print("assignment tab not found\n");
 				}
@@ -270,6 +283,10 @@ public class MewTwoLayoutController {
 
 		}
 	}
+	 // action event
+    private void buttonClicked(Button button) {
+    	System.out.printf("Button Id: %s", button.getId());
+    }
 	@FXML
 	public void deleteCircles(ActionEvent event) {
 		c1.setVisible(false);
@@ -374,3 +391,5 @@ public class MewTwoLayoutController {
     }
 
 }
+
+
