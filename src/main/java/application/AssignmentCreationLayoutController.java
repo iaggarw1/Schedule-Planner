@@ -44,6 +44,7 @@ public class AssignmentCreationLayoutController {
 	private static ComboBox<String> tempAssignmentBox = new ComboBox<String>();
 	private MewTwoLayoutController mainPage;
 	private static int editAssignmentID = 0;
+	private static String tempClassCheck = null;
 	@FXML
 	private TextField assignmentNameID;
 	@FXML
@@ -170,20 +171,50 @@ public class AssignmentCreationLayoutController {
 					}
 					iter++;
 				}
-				
-				ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
-				for(Class tempClass: classes) {
-					if(tempClass.getClassName() == classComboBox.getValue()) {
-						ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
-						for(Assignment tempAssignment: tempClass.getAssignments()) {
-							if(editAssignmentID == tempAssignment.getAssignmentID()) {
-								tempAssignments.add(tempAssign);
+				if(tempClassCheck == classComboBox.getValue()) {
+					ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+					for(Class tempClass: classes) {
+						if(tempClass.getClassName() == classComboBox.getValue()) {
+							ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
+							for(Assignment tempAssignment: tempClass.getAssignments()) {
+								if(editAssignmentID == tempAssignment.getAssignmentID()) {
+									tempAssignments.add(tempAssign);
+								}
+								else {
+									tempAssignments.add(tempAssignment);
+								}
 							}
-							else {
-								tempAssignments.add(tempAssignment);
-							}
+							tempClass.setAssignments(tempAssignments);
 						}
-						tempClass.setAssignments(tempAssignments);
+					}
+				}
+				else {
+					ArrayList<Class> classes = ClassCreationLayoutController.getClasses();
+					/* Remove assignment from old class */
+					for(Class tempClass: classes) {
+						if(tempClass.getClassName() == tempClassCheck) {
+							ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
+							for(Assignment tempAssignment: tempClass.getAssignments()) {
+								if(editAssignmentID == tempAssignment.getAssignmentID()) {
+									continue;
+								}
+								else {
+									tempAssignments.add(tempAssignment);
+								}
+							}
+							tempClass.setAssignments(tempAssignments);
+						}
+					}
+					/* Add assignment to new class */
+					for(Class tempClass: classes) {
+						if(tempClass.getClassName() == classComboBox.getValue()) {
+							ArrayList<Assignment> tempAssignments = new ArrayList<Assignment>();
+							for(Assignment tempAssignmet: tempClass.getAssignments()) {
+								tempAssignments.add(tempAssignmet);
+							}
+							tempAssignments.add(tempAssign);
+							tempClass.setAssignments(tempAssignments);
+						}
 					}
 				}
 			}
@@ -219,6 +250,7 @@ public class AssignmentCreationLayoutController {
 		classComboBox.setValue(null);
 		editBox.setValue(null);
 		editAssignmentID = 0;
+		tempClassCheck = null;
 	}
 	
 	public static ArrayList<Assignment> getAssignments(){
@@ -297,6 +329,7 @@ public class AssignmentCreationLayoutController {
 						//			classInst = tempClass;
 					System.out.println(tempAssignment.getAssignmentName());
 					classComboBox.setValue(tempClass.getClassName());
+					tempClassCheck = tempClass.getClassName();
 					//break;
 				}
 			}
@@ -308,6 +341,7 @@ public class AssignmentCreationLayoutController {
 		Date d1 = mt.getTime();
 		LocalDate date1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		datePicker.setValue(date1);
+		
 		
 		updateStartTime(d1);
 	}
