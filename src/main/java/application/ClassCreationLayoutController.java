@@ -377,6 +377,7 @@ public class ClassCreationLayoutController {
 			for(String day: daysOfTheWeek) {
 				meetingDow.add(day);
 			}
+			color = cp.getValue();
 			//for testing
 			System.out.println("days: ");
 			for(String day: daysOfTheWeek) {
