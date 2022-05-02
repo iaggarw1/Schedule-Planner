@@ -18,6 +18,7 @@ public class Main extends Application {
 
 	private MewTwoLayoutController m2Controller;
 	private AssignmentCreationLayoutController assignmentController;
+	private AssignmentDescriptionController descriptionController;
 
 	static Parent assignmentDescription;
 	
@@ -30,16 +31,18 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
 			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("AssignmentCreationLayout.fxml"));
+			FXMLLoader loader3 = new FXMLLoader(getClass().getResource("AssignmentDescription.fxml"));
 			//BorderPane root = new BorderPane();
 			//Scene scene = new Scene(root,400,400);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			mainPane = loader.load();
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
-
+			assignmentDescription = loader3.load();
 			addAssignmentPane = loader2.load();
 
 			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
-			assignmentDescription = FXMLLoader.load(getClass().getResource("AssignmentDescription.fxml"));
+
+			descriptionController = loader3.getController();
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -51,6 +54,9 @@ public class Main extends Application {
 			assignmentController = loader2.getController();
 			m2Controller = loader.getController();
 			assignmentController.setMainPage(m2Controller);
+
+
+			m2Controller.setDescriptionController(descriptionController);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -81,5 +87,9 @@ public class Main extends Application {
 				displayedStage.setTitle("Assignment Description");
 				break;
 		}
+	}
+	
+	public AssignmentDescriptionController getController() {
+		return descriptionController;
 	}
 }

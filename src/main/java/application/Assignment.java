@@ -78,6 +78,12 @@ public class Assignment {
 		return classInst;
 	}
 	
+	public String getClassName() {
+		return classInst.getClassName();
+	}
+	
+	
+	
 	public int status() {
 		return status;
 	}

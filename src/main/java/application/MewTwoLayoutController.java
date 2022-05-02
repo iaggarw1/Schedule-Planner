@@ -60,6 +60,7 @@ public class MewTwoLayoutController {
 	private Date date = new Date();
 	public Calendar selectedDate = Calendar.getInstance();
 	private LocalDate assignmentDate = LocalDate.now();
+	private AssignmentDescriptionController description;
 
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
 	
@@ -240,7 +241,7 @@ public class MewTwoLayoutController {
 				b.setTranslateX(26);
 				b.setTranslateY(55 * (allButtons.size() + 1));
 				b.setMinSize(525, 30);
-				b.setOnAction(event -> buttonClicked(b, ass));
+				b.setOnAction(event -> buttonClicked(b));
 				allButtons.add(b);
 				assignmentTab.getChildren().add(b);
 				
@@ -276,9 +277,18 @@ public class MewTwoLayoutController {
 		}
 	}
 	 // action event
-    private void buttonClicked(Button button, Assignment ass) {
-    	AssignmentDescriptionController.assignment = ass;
-    	AssignmentDescriptionController.update();
+    private void buttonClicked(Button button) {
+    	
+    	String[] strs = button.getText().split(" - ");
+    	String str2 = strs[1].trim();
+    	int id = Integer.parseInt(str2);
+    	ArrayList<Assignment> list = AssignmentCreationLayoutController.getAssignments();
+    	for(Assignment a : list) {
+    		if(a.getAssignmentID() == id) {
+    			description.assignment = a;
+    		}
+    	}
+    	description.update();
     	Main.switchScene(3);
     }
     
@@ -347,6 +357,7 @@ public class MewTwoLayoutController {
     
     @FXML
     private TextField textInput;
+
     
     
     @FXML
@@ -381,6 +392,12 @@ public class MewTwoLayoutController {
     public void switchToDescription() {
     	Main.switchScene(3);
     }
+
+
+	public void setDescriptionController(AssignmentDescriptionController descriptionController) {
+		// TODO Auto-generated method stub
+		description = descriptionController;
+	}
 
 }
 

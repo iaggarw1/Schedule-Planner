@@ -11,13 +11,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 public class AssignmentDescriptionController {
-	static Assignment assignment = new Assignment();
+	public Assignment assignment = new Assignment();
 	
 	@FXML
-	private static TextArea description;
+	private TextArea description;
 
     @FXML
-    private static Text assignmentName;
+    private Text assignmentName;
 
     @FXML
     private Button backButton;
@@ -26,7 +26,7 @@ public class AssignmentDescriptionController {
     private Text className;
 
     @FXML
-    private static Text dueDate;
+    private Text dueDate;
 
     @FXML
     private Button saveButton;
@@ -42,7 +42,6 @@ public class AssignmentDescriptionController {
     	else
     		assignmentName.setText(assignment.getAssignmentName());
         
-        className.setText(assignment.getClassInst().getClassName());
     }
 
     @FXML
@@ -64,7 +63,7 @@ public class AssignmentDescriptionController {
     		assignmentName.setText(assignment.getAssignmentName());
     }
     
-    public static void update() {
+    public  void update() {
     	description.setText(assignment.getDescription());
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy\nHH:mm");
     	Calendar due = assignment.getDueDate();
@@ -74,6 +73,8 @@ public class AssignmentDescriptionController {
     		assignmentName.setText(assignment.getAssignmentName() + " (Done)");
     	else
     		assignmentName.setText(assignment.getAssignmentName());
+    	
+    	className.setText(assignment.getClassName());
     }
 
 }
