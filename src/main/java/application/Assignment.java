@@ -18,6 +18,7 @@ public class Assignment {
 	private String assignmentName = "";
 	private int assignmentID;
 	private Class classInst;
+	private int status = -1;
 	
 	public Assignment() {
 		setDueDate(0,0,0,0,0);
@@ -75,5 +76,13 @@ public class Assignment {
 	
 	public Class getClassInst() {
 		return classInst;
+	}
+	
+	public int status() {
+		return status;
+	}
+	
+	public int modStatus() {
+		return status * -1;
 	}
 }

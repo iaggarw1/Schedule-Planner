@@ -35,8 +35,11 @@ public class AssignmentDescriptionController {
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy\nHH:mm");
     	Calendar due = assignment.getDueDate();
         dueDate.setText(dateFormat.format(due.getTime()));
-
-        assignmentName.setText(assignment.getAssignmentName());
+        
+    	if(assignment.status() == 1)
+    		assignmentName.setText(assignment.getAssignmentName() + " (Done)");
+    	else
+    		assignmentName.setText(assignment.getAssignmentName());
         
         //className.setText(assignment.getClassInst().getClassName());
     }
@@ -49,6 +52,15 @@ public class AssignmentDescriptionController {
     @FXML
     void switchToMain(ActionEvent event) {
     	Main.switchScene(0);
+    }
+    
+    @FXML
+    public void completeAssignment() {
+    	assignment.modStatus();
+    	if(assignment.status() == 1)
+    		assignmentName.setText(assignment.getAssignmentName() + " (Done)");
+    	else
+    		assignmentName.setText(assignment.getAssignmentName());
     }
 
 }
