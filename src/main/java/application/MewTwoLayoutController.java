@@ -38,12 +38,7 @@ public class MewTwoLayoutController {
 	private Circle[][] circle_grid;
 	@FXML
 	private GridPane calPane;
-	@FXML
-	private Circle c1;
-	@FXML
-	private Circle c2;
-	@FXML
-	private Circle c3;
+
 	@FXML
 	private Text currentDate; 
 	@FXML
@@ -166,9 +161,6 @@ public class MewTwoLayoutController {
 			dowSlots[dayOfMonth - 1].setText(tempS);
 		}
 		
-		c1.setVisible(false);
-		c2.setVisible(false);
-		c3.setVisible(false);
 		circle_grid = new Circle[calPane.getRowCount()][calPane.getColumnCount()];
 		ObservableList<String> list = FXCollections.observableArrayList();
     	comboBox.setItems(list);   
@@ -243,12 +235,12 @@ public class MewTwoLayoutController {
 			if(dueDate.get(Calendar.YEAR)== currentYear && dueDate.get(Calendar.MONTH) + 1  == currentMonth
 					&& dueDate.get(Calendar.DAY_OF_MONTH)  == currentDay) {
 				currentAssignments.add(ass);
-				Button b = new Button(ass.getDueDate().getTime() + " " + ass.getAssignmentName() + " - " + ass.getDescription());
+				Button b = new Button(ass.getDueDate().getTime() + " " + ass.getAssignmentName() + " - " + ass.getAssignmentID());
 				b.setId(Integer.toString(i));
 				b.setTranslateX(26);
 				b.setTranslateY(55 * (allButtons.size() + 1));
 				b.setMinSize(525, 30);
-				b.setOnAction(event -> buttonClicked(b));
+				b.setOnAction(event -> buttonClicked(b, ass));
 				allButtons.add(b);
 				assignmentTab.getChildren().add(b);
 				
@@ -284,14 +276,14 @@ public class MewTwoLayoutController {
 		}
 	}
 	 // action event
-    private void buttonClicked(Button button) {
-    	System.out.printf("Button Id: %s", button.getId());
+    private void buttonClicked(Button button, Assignment ass) {
+    	AssignmentDescriptionController.assignment = ass;
+    	AssignmentDescriptionController.update();
+    	Main.switchScene(3);
     }
+    
 	@FXML
 	public void deleteCircles(ActionEvent event) {
-		c1.setVisible(false);
-		c2.setVisible(false);
-		c3.setVisible(false);
 		
 		for(Circle circ : circle_list) {
 			circ.setVisible(false);

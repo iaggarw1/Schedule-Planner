@@ -35,11 +35,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-            		<Circle fx:id="c1" fill="#00ff1a" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <Circle fx:id="c2" fill="#009eff" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Circle fx:id="c3" fill="RED" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-               </children>
             </GridPane>
             <Button layoutX="476.0" layoutY="231.0" mnemonicParsing="false" onAction="#deleteCircles" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
             <Button layoutX="357.0" layoutY="231.0" mnemonicParsing="false" onAction="#drawCircles" prefHeight="25.0" prefWidth="108.0" text="Draw Circle" />
