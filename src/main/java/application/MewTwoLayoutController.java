@@ -253,13 +253,20 @@ public class MewTwoLayoutController {
 				allButtons.add(b);
 				assignmentTab.getChildren().add(b);
 				////////////////////////////////////////////////////////////
-				int row = ass.getDueDate().get(Calendar.DAY_OF_MONTH)/6;
+				int row = ass.getDueDate().get(Calendar.DAY_OF_MONTH)/7;
+				if (ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 == 0) {
+					row = row - 1;
+				}
 				int col = ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 - 1;
+				if (ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 == 0) {
+					col = col + 7;
+				}
+				System.out.println("Row: " + row + " Col: " + col);
 				if(circle_grid[row][col] == null) {
 					Circle c = new Circle();
 					GridPane.setHalignment(c, HPos.LEFT);
 					Color color = ass.getClassInst().getColor();
-					c.setRadius(4);
+					c.setRadius(4); 
 					c.setFill(color);
 					c.setVisible(true);
 					
