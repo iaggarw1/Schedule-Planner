@@ -16,9 +16,9 @@ public class Main extends Application {
 	static Parent addClassPane;
 	static Parent addAssignmentPane;
 
-	private MewTwoLayoutController m2Controller;
-	private AssignmentCreationLayoutController assignmentController;
-	private AssignmentDescriptionController descriptionController;
+	private static MewTwoLayoutController m2Controller;
+	private static AssignmentCreationLayoutController assignmentController;
+	private static AssignmentDescriptionController descriptionController;
 
 	static Parent assignmentDescription;
 	
@@ -89,7 +89,11 @@ public class Main extends Application {
 		}
 	}
 	
-	public AssignmentDescriptionController getController() {
+	public static AssignmentDescriptionController getController() {
 		return descriptionController;
+	}
+	
+	public static MewTwoLayoutController getMew2Controller() {
+		return m2Controller;
 	}
 }

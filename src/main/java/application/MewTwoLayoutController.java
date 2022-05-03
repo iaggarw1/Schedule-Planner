@@ -304,9 +304,9 @@ public class MewTwoLayoutController {
 			//assignmentObjects.add(tempRect);
 			
 
-
-
 		}
+		System.out.println("I updated the assignments");
+
 	}
 	 // action event
     private void buttonClicked(Button button) {
