@@ -38,6 +38,7 @@ public class MewTwoLayoutController {
 	private int[][] calendar_ints = new int[6][7];
 	private Circle[][] circle_grid;
 	private Rectangle[][] rectangle_grid;
+	private ScheduleController scheduleController;
 	@FXML
 	private GridPane calPane;
 
@@ -46,13 +47,16 @@ public class MewTwoLayoutController {
 	@FXML
 	private Text fullDate;
 	@FXML
-
 	private AnchorPane assignmentTab;
 	
-	private ArrayList<Rectangle> assignmentObjects = new ArrayList<Rectangle>();
+	@FXML
+	private Button scheduleButton;
+	
 	@FXML
 	private Text dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7;
+	
 	private Calendar cal = Calendar.getInstance();
+	private ArrayList<Rectangle> assignmentObjects = new ArrayList<Rectangle>();
 	//private Text[] dowSlots = {dowSlot1, dowSlot2, dowSlot3, dowSlot4, dowSlot5, dowSlot6, dowSlot7};
 	private Text[] dowSlots = new Text[7];
 	
@@ -254,7 +258,8 @@ public class MewTwoLayoutController {
 				assignmentTab.getChildren().add(b);
 				////////////////////////////////////////////////////////////
 				int row = ass.getDueDate().get(Calendar.DAY_OF_MONTH)/6;
-				int col = ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 - 1;
+				if(row < 0) row = 0;
+				int col = ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 -1;
 				if(circle_grid[row][col] == null) {
 					Circle c = new Circle();
 					GridPane.setHalignment(c, HPos.LEFT);
@@ -409,11 +414,21 @@ public class MewTwoLayoutController {
     public void switchToDescription() {
     	Main.switchScene(3);
     }
-
+    
+    @FXML
+    public void displaySchedule() {
+    	Main.switchScene(4);
+    	scheduleController.update();
+    }
 
 	public void setDescriptionController(AssignmentDescriptionController descriptionController) {
 
 		description = descriptionController;
+	}
+	
+	public void setSchedule(ScheduleController schContr) {
+
+		scheduleController = schContr;
 	}
 
 }

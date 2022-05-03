@@ -56,11 +56,19 @@ public class AssignmentDescriptionController {
     
     @FXML
     public void completeAssignment() {
-    	assignment.modStatus();
-    	if(assignment.status() == 1)
-    		assignmentName.setText(assignment.getAssignmentName() + " (Done)");
-    	else
-    		assignmentName.setText(assignment.getAssignmentName());
+    	if(assignment.status() == 1) {
+    		assignment.modStatus();
+    		assignment.setAssignmentName(assignment.origName);
+
+    		System.out.println(assignment.status());
+    	} else {
+    		assignment.modStatus();
+    		assignment.setAssignmentName(assignment.getAssignmentName() + " (Done)");
+
+    		System.out.println(assignment.status());
+    	}
+    	System.out.println(assignment.getAssignmentName() + " "+ assignment.status());
+    	update();
     }
     
     public  void update() {
@@ -68,10 +76,7 @@ public class AssignmentDescriptionController {
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy\nHH:mm");
     	Calendar due = assignment.getDueDate();
         dueDate.setText(dateFormat.format(due.getTime()));
-        
-    	if(assignment.status() == 1)
-    		assignmentName.setText(assignment.getAssignmentName() + " (Done)");
-    	else
+
     		assignmentName.setText(assignment.getAssignmentName());
     	
     	className.setText(assignment.getClassName());

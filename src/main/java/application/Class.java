@@ -113,6 +113,10 @@ public class Class {
 	public int getClassID() {
 		return classID;
 	}
+	
+	public String toString() {
+		return className + " - " + classID + " Duration: " + classDuration + " Loc: " + meetingLoc + " Meeting Time: " + meetingTime;
+	}
 }
 
 

@@ -15,11 +15,11 @@ public class Main extends Application {
 	static Parent mainPane;
 	static Parent addClassPane;
 	static Parent addAssignmentPane;
-
+	static Parent schedule;
 	private MewTwoLayoutController m2Controller;
 	private AssignmentCreationLayoutController assignmentController;
 	private AssignmentDescriptionController descriptionController;
-
+	private ScheduleController scheduleController;
 	static Parent assignmentDescription;
 	
 	public Main() {
@@ -32,6 +32,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MewTwoLayout.fxml"));
 			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("AssignmentCreationLayout.fxml"));
 			FXMLLoader loader3 = new FXMLLoader(getClass().getResource("AssignmentDescription.fxml"));
+			FXMLLoader loader4 = new FXMLLoader(getClass().getResource("Schedule.fxml"));
 			//BorderPane root = new BorderPane();
 			//Scene scene = new Scene(root,400,400);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -39,9 +40,8 @@ public class Main extends Application {
 			addClassPane = FXMLLoader.load(getClass().getResource("ClassCreationLayout.fxml"));
 			assignmentDescription = loader3.load();
 			addAssignmentPane = loader2.load();
-
 			addAssignmentPane = FXMLLoader.load(getClass().getResource("AssignmentCreationLayout.fxml"));
-
+			schedule = loader4.load();
 			descriptionController = loader3.getController();
 			primaryStage.show();
 			SplitPane root = FXMLLoader.load(getClass().getResource("MewTwoLayout.fxml"));
@@ -54,8 +54,8 @@ public class Main extends Application {
 			assignmentController = loader2.getController();
 			m2Controller = loader.getController();
 			assignmentController.setMainPage(m2Controller);
-
-
+			scheduleController = loader4.getController();
+			m2Controller.setSchedule(scheduleController);
 			m2Controller.setDescriptionController(descriptionController);
 			
 		} catch(Exception e) {
@@ -85,6 +85,10 @@ public class Main extends Application {
 			case 3:
 				displayedStage.getScene().setRoot(assignmentDescription);
 				displayedStage.setTitle("Assignment Description");
+				break;
+			case 4:
+				displayedStage.getScene().setRoot(schedule);
+				displayedStage.setTitle("Schedule");
 				break;
 		}
 	}

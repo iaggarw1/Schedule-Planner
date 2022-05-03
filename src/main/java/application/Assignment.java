@@ -18,12 +18,15 @@ public class Assignment {
 	private String assignmentName = "";
 	private int assignmentID;
 	private Class classInst;
-	private int status = -1;
+	private int status;
+	public String origName;
 	
 	public Assignment() {
 		setDueDate(0,0,0,0,0);
 		assignmentID = autoAssignmentID;
 		autoAssignmentID++;
+		status = -1;
+		origName = "";
 	}
 	
 	public Assignment(int month, int day, int year, int hour, int minute, String desc, String name) {
@@ -32,6 +35,8 @@ public class Assignment {
 		assignmentName = name;
 		assignmentID = autoAssignmentID;
 		autoAssignmentID++;
+		status = -1;
+		origName = name;
 	}
 	public Assignment(int month, int day, int year, int hour, int minute, String desc, String name, Class newClassInst) {
 		dueDate.set(year, month, day, hour, minute);
@@ -40,6 +45,8 @@ public class Assignment {
 		assignmentID = autoAssignmentID;
 		autoAssignmentID++;
 		classInst = newClassInst;
+		status = -1;
+		origName = name;
 	}
 	
 	public void setDueDate(int month, int day, int year, int hour, int minute) {
@@ -89,6 +96,12 @@ public class Assignment {
 	}
 	
 	public int modStatus() {
-		return status * -1;
+		System.out.println(status);
+		if(status == 1)
+			status = -1;
+		else
+			status = 1;
+		
+		return status;
 	}
 }
