@@ -35,6 +35,7 @@ import javafx.scene.text.Text;
 public class MewTwoLayoutController {
 	
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
+	private int[][] calendar_ints = new int[6][7];
 	private Circle[][] circle_grid;
 	@FXML
 	private GridPane calPane;
@@ -144,6 +145,7 @@ public class MewTwoLayoutController {
 					GridPane.setHalignment(tempDay, HPos.CENTER);
 					calPane.add(rect, i-1, j-1);
 					calPane.add(tempDay, i - 1, j - 1);
+					calendar_ints[j-1][i-1] = dayNum;
 				} else {
 					//Break for loop
 					i = calPane.getColumnCount() + 2;
@@ -245,6 +247,18 @@ public class MewTwoLayoutController {
 				allButtons.add(b);
 				assignmentTab.getChildren().add(b);
 				
+				Circle c = new Circle();
+				GridPane.setHalignment(c, HPos.LEFT);
+				Color color = ass.getClassInst().getColor();
+				c.setRadius(7);
+				c.setFill(color);
+				c.setVisible(true);
+				int row = ass.getDueDate().get(Calendar.DAY_OF_MONTH)/6;
+				int col = ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 - 1;
+				calPane.add(c, row, col);
+				GridPane.setColumnIndex(c, col);
+				GridPane.setRowIndex(c, row);
+				circle_list.add(c);
 			}
 		}
 
@@ -265,7 +279,7 @@ public class MewTwoLayoutController {
 					System.out.print("assignment tab not found\n");
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			//tempRect.;
@@ -317,29 +331,10 @@ public class MewTwoLayoutController {
 			int col = GridPane.getColumnIndex(clickedNode);
 			int row = GridPane.getRowIndex(clickedNode);
 			//System.out.println("Row: " + (row + 1) + " Col: " + (col + 1));
-			if(circle_grid[row][col] == null) {
-				Circle c = new Circle();
-				GridPane.setHalignment(c, HPos.LEFT);
-				Color color = Color.web("0x009eff");
-				c.setRadius(7);
-				c.setFill(color);
-				c.setVisible(true);
-				GridPane.setColumnIndex(c, col);
-				GridPane.setRowIndex(c, row);
-				//System.out.println(c.getCenterX());
-				//System.out.println(c.getCenterY());
-				//calPane.getChildren().add(c);
-				circle_list.add(c);
-				circle_grid[row][col] = c;
-				//getNodeFromGridPane(calPane, col, row);
-				
-
-			} else {
-				//System.out.println("There is already a circle there");
-			}
 			//Set Selected Date NEED TO UPDATE WHEN WE FIX DATE ISSUE
 			//selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
 			selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH) + 1, (row) * 7 + col + 1);
+			System.out.println(selectedDate.get(Calendar.YEAR) + " " + selectedDate.get(Calendar.MONTH) + " " + selectedDate.get(Calendar.DAY_OF_MONTH));
 			//System.out.printf("Date: %d\n", (row) * 7 + col + 1);
 			//System.out.printf("Day: %d Month %d\n ", selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.MONTH));
 			//Current Known issue: entering 31 doesn't update properly on the first time, but works after that. I'm bad at programming so I don't know why this happens
@@ -395,7 +390,7 @@ public class MewTwoLayoutController {
 
 
 	public void setDescriptionController(AssignmentDescriptionController descriptionController) {
-		// TODO Auto-generated method stub
+
 		description = descriptionController;
 	}
 
