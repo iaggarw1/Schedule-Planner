@@ -77,6 +77,8 @@ public class MewTwoLayoutController {
 		//updateAssignments();
 		//Get Date
 		selectedDate.setTime(date);
+		//Manual solution to months starting at 0 instead of 1
+		selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH) + 1, selectedDate.get(Calendar.DAY_OF_MONTH));
 		int currMonth = selectedDate.get(Calendar.MONTH);
 		String monthString;
 		
@@ -339,9 +341,9 @@ public class MewTwoLayoutController {
 			}
 			//Set Selected Date NEED TO UPDATE WHEN WE FIX DATE ISSUE
 			//selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
-			selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH) + 1, (row) * 7 + col + 1);
+			selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
 			//System.out.printf("Date: %d\n", (row) * 7 + col + 1);
-			//System.out.printf("Day: %d Month %d\n ", selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.MONTH));
+			System.out.printf("Day: %d Month %d\n ", selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.MONTH));
 			//Current Known issue: entering 31 doesn't update properly on the first time, but works after that. I'm bad at programming so I don't know why this happens
 			updateAssignments();
 		} catch (Exception err) {
