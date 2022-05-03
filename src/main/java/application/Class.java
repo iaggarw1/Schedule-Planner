@@ -115,7 +115,7 @@ public class Class {
 	}
 	
 	public String toString() {
-		return className + " - " + classID + " Duration: " + classDuration + " Loc: " + meetingLoc + " Meeting Time: " + meetingTime;
+		return className + "-" + classID + " Dur: " + classDuration + " Loc: " + meetingLoc + " Meeting Time: " + meetingTime;
 	}
 }
 

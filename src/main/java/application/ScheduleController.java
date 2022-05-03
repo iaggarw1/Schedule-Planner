@@ -34,7 +34,7 @@ public class ScheduleController {
 		// TODO Auto-generated method stub
 		classes = ClassCreationLayoutController.getClasses();
 		for(int i = 0; i < classes.size(); i++) {
-    		Rectangle r = new Rectangle(104, 90+(50*i), 400, 45);
+    		Rectangle r = new Rectangle(104, 90+(50*i), 450, 45);
     		Text t = new Text(115, 115+(50*i), classes.get(i).toString());
     		Color class_color = classes.get(i).getColor();
     		t.setFill(class_color);

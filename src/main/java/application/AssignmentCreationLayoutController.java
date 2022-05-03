@@ -239,6 +239,9 @@ public class AssignmentCreationLayoutController {
 		else {
 			System.out.println("Please fill in all of the fields");
 		}
+		
+		MewTwoLayoutController mewTwoLayoutController = Main.getMew2Controller();
+		mewTwoLayoutController.updateAssignments();
 	}
 	public void resetScene() {
 		assignmentNameID.clear();
