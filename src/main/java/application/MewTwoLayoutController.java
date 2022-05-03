@@ -37,6 +37,7 @@ public class MewTwoLayoutController {
 	private static ComboBox<String> tempComboBox = new ComboBox<String>();
 	private int[][] calendar_ints = new int[6][7];
 	private Circle[][] circle_grid;
+	private Rectangle[][] rectangle_grid;
 	@FXML
 	private GridPane calPane;
 
@@ -60,6 +61,7 @@ public class MewTwoLayoutController {
 	int x = 166;
 	private Date date = new Date();
 	public Calendar selectedDate = Calendar.getInstance();
+	private Calendar extCurrDate = Calendar.getInstance();
 	private LocalDate assignmentDate = LocalDate.now();
 	private AssignmentDescriptionController description;
 
@@ -78,6 +80,8 @@ public class MewTwoLayoutController {
 		//updateAssignments();
 		//Get Date
 		selectedDate.setTime(date);
+		//Manual solution to months starting at 0 instead of 1
+		selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH) + 1, selectedDate.get(Calendar.DAY_OF_MONTH));
 		int currMonth = selectedDate.get(Calendar.MONTH);
 		String monthString;
 		
@@ -123,7 +127,7 @@ public class MewTwoLayoutController {
 		}
 		currentDate.setText(monthString + " " + selectedDate.get(Calendar.YEAR));
 		setFullDate(monthString); /* Set full date text field to current date*/
-		
+		rectangle_grid = new Rectangle[calPane.getRowCount()][calPane.getColumnCount()];
 		//Fill calendar with dates
 		int dayCount = 0; /* Used to highlight current day */
 		GridPane.setHalignment(calPane, HPos.CENTER);
@@ -146,6 +150,7 @@ public class MewTwoLayoutController {
 					calPane.add(rect, i-1, j-1);
 					calPane.add(tempDay, i - 1, j - 1);
 					calendar_ints[j-1][i-1] = dayNum;
+					rectangle_grid[j-1][i-1] = rect;
 				} else {
 					//Break for loop
 					i = calPane.getColumnCount() + 2;
@@ -165,6 +170,7 @@ public class MewTwoLayoutController {
 		}
 		
 		circle_grid = new Circle[calPane.getRowCount()][calPane.getColumnCount()];
+
 		ObservableList<String> list = FXCollections.observableArrayList();
     	comboBox.setItems(list);   
     	getClass().getClassLoader();
@@ -246,19 +252,24 @@ public class MewTwoLayoutController {
 				b.setOnAction(event -> buttonClicked(b));
 				allButtons.add(b);
 				assignmentTab.getChildren().add(b);
-				
-				Circle c = new Circle();
-				GridPane.setHalignment(c, HPos.LEFT);
-				Color color = ass.getClassInst().getColor();
-				c.setRadius(7);
-				c.setFill(color);
-				c.setVisible(true);
+				////////////////////////////////////////////////////////////
 				int row = ass.getDueDate().get(Calendar.DAY_OF_MONTH)/6;
 				int col = ass.getDueDate().get(Calendar.DAY_OF_MONTH)%7 - 1;
-				calPane.add(c, row, col);
-				GridPane.setColumnIndex(c, col);
-				GridPane.setRowIndex(c, row);
-				circle_list.add(c);
+				if(circle_grid[row][col] == null) {
+					Circle c = new Circle();
+					GridPane.setHalignment(c, HPos.LEFT);
+					Color color = ass.getClassInst().getColor();
+					c.setRadius(4);
+					c.setFill(color);
+					c.setVisible(true);
+					
+					
+					calPane.add(c, row, col);
+					GridPane.setColumnIndex(c, col);
+					GridPane.setRowIndex(c, row);
+					circle_list.add(c);
+					circle_grid[row][col] = c;
+				}
 			}
 		}
 
@@ -333,10 +344,21 @@ public class MewTwoLayoutController {
 			//System.out.println("Row: " + (row + 1) + " Col: " + (col + 1));
 			//Set Selected Date NEED TO UPDATE WHEN WE FIX DATE ISSUE
 			//selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
-			selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH) + 1, (row) * 7 + col + 1);
+			selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), (row) * 7 + col + 1);
 			System.out.println(selectedDate.get(Calendar.YEAR) + " " + selectedDate.get(Calendar.MONTH) + " " + selectedDate.get(Calendar.DAY_OF_MONTH));
 			//System.out.printf("Date: %d\n", (row) * 7 + col + 1);
-			//System.out.printf("Day: %d Month %d\n ", selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.MONTH));
+			System.out.printf("Day: %d Month %d\n ", selectedDate.get(Calendar.DAY_OF_MONTH), selectedDate.get(Calendar.MONTH));
+			int extCurrRow = extCurrDate.get(Calendar.DAY_OF_MONTH)/6;
+			int extCurrCol = extCurrDate.get(Calendar.DAY_OF_MONTH)%7 - 1;
+			for(int i = 0 ; i < rectangle_grid.length; i++) {
+				for(int j = 0; j < rectangle_grid[0].length; j++) {
+					if(rectangle_grid[i][j] != null)
+						rectangle_grid[i][j].setFill(Color.WHITE);
+				}
+			}
+			rectangle_grid[extCurrRow][extCurrCol].setFill(Color.YELLOW);
+			Color selectedColor = Color.web("0x1FBED6");
+			rectangle_grid[row][col].setFill(selectedColor);
 			//Current Known issue: entering 31 doesn't update properly on the first time, but works after that. I'm bad at programming so I don't know why this happens
 			updateAssignments();
 		} catch (Exception err) {

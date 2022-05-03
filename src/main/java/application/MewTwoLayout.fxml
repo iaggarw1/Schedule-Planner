@@ -36,8 +36,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Button layoutX="476.0" layoutY="231.0" mnemonicParsing="false" onAction="#deleteCircles" prefHeight="25.0" prefWidth="108.0" text="Delete Circle" />
-            <Button layoutX="357.0" layoutY="231.0" mnemonicParsing="false" onAction="#drawCircles" prefHeight="25.0" prefWidth="108.0" text="Draw Circle" />
             <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="231.0" onMousePressed="#refreshComboBox" prefWidth="150.0" />
             <Button layoutX="174.0" layoutY="231.0" mnemonicParsing="false" onAction="#getComboBoxInfo" text="Print Selection" />
             <GridPane layoutX="3.0" layoutY="45.0" prefHeight="30.0" prefWidth="592.0">
@@ -77,8 +75,6 @@
             <ScrollBar layoutX="578.0" layoutY="4.0" orientation="VERTICAL" prefHeight="186.0" prefWidth="14.0" />
 
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="48.0" layoutX="25.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="525.0" />
-
-            <Button layoutX="390.0" layoutY="190.0" mnemonicParsing="false" onAction="#switchToDescription" prefHeight="25.0" prefWidth="195.0" text="Assignment Description Test" />
          </children>
       </AnchorPane>
   </items>
