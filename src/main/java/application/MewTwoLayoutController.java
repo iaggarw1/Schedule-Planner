@@ -79,6 +79,7 @@ public class MewTwoLayoutController {
 		dowSlots[4] = dowSlot5;
 		dowSlots[5] = dowSlot6;
 		dowSlots[6] = dowSlot7;
+		comboBox.setValue("Classes: ");
 		int dayNum = 1;
 		//Update Assignments Tab
 		//updateAssignments();

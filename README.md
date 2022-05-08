@@ -83,7 +83,30 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
+#Sprint 5 (5/3)
 
+*Planned for:* 8 stories for 31 points
 
+*Achieved:* 8 stories for 31 points
+
+**What was completed:**
+-Fixed bugs and errors
+-Be able to edit assignments
+-fix duplication error for classes and assignments
+-Change assignemnts in Calendar to buttons
+-Chagne meeting times to a drop down
+-Fix display of the days of the week on the calendar
+-Adding checkmarks for completed assignments
+-Cirlces are populated in the calendar to represent assignments
+
+**How to Run:**
+1. Open project in eclipse
+2. Run using gradle
+
+**Languages/Libraries:**
+1. Java SDK 8+
+2. Eclipse v2021+
+3. Gradle 7.4.2
+4. JavaFX 18 x64
 
 
