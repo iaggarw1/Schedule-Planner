@@ -156,3 +156,4 @@ Clicking on border of box on the Calendar | Cannot invoke "java.lang.Integer.int
 ## Lessons Learned
 - Have a plan to make the best use of your time with the customer. Have one person assigned to keeping track of notes, and ask as many questions as you need. In addition, creating visuals to demonstrate your understanding of the project is highly recommended, as it will verify the vision for both parties. 
 - When working on each part of the project (each issue) make sure to implement it all the way across. That is to say, make sure that each thing you implement can be seen and used by the customer at the end of each sprint
+
