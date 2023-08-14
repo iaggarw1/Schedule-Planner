@@ -27,7 +27,7 @@ Group: **Mewtwo**
 
 -> ask Humera about filtering by class
 
-#Sprint 2 (4/12)
+# Sprint 2 (4/12)
 
 *Planned for:* 6 stories for 27 points
 
@@ -45,7 +45,7 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
-#Sprint 3 (4/19)
+# Sprint 3 (4/19)
 
 *Planned for:* 10 stories for 36 points
 
@@ -64,7 +64,7 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
-#Sprint 4 (4/26)
+# Sprint 4 (4/26)
 
 *Planned for:* 6 stories for 33 points
 
@@ -83,7 +83,7 @@ Group: **Mewtwo**
 1. Open project in eclipse
 2. Run using gradle
 
-#Sprint 5 (5/3)
+# Sprint 5 (5/3)
 
 *Planned for:* 8 stories for 31 points
 
